@@ -1,4 +1,4 @@
-import CrustIcon from "../../../components/icons/crustIcon";
+import VolaLogo from "../../../components/icons/VolaLogo";
 
 const nodes = [
   {
@@ -7,15 +7,15 @@ const nodes = [
   },
 ];
 
-const crust = {
+const vola = {
   name: "Vola",
-  icon: <CrustIcon />,
-  // identity: "crust",
+  icon: <VolaLogo width={20} height={20} />,
+  // identity: "vola",
   value: "vola",
   symbol: "VOLA",
   decimals: 12,
-  color: "#FA8C16",
-  colorSecondary: "rgba(250,140,22, 0.1)",
+  color: "rgba(8, 145, 178, 1)",
+  colorSecondary: "rgba(6, 182, 212, 1)",
   // modules: {
   //   identity: true,
   //   multisig: false,
@@ -24,4 +24,4 @@ const crust = {
   useOnChainBlockData: true,
 };
 
-export default crust;
+export default vola;
