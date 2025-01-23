@@ -141,50 +141,13 @@ export default function ChainSwitch() {
 
   return (
     <Wrapper ref={ref} onClick={() => setShow((state) => !state)}>
-      <Dropdown active={show}>
+      <Dropdown active={false}>
         <Flex>
           {currentNode.icon}
           <Text>{currentNode.name}</Text>
         </Flex>
-        <ArrowDownIcon />
+        {/* <ArrowDownIcon /> */}
       </Dropdown>
-
-      {show && (
-        <Options>
-          <ChainGroupWrapper>
-            {chainOptions.map((chainOption) => (
-              <ChainGroup key={chainOption.title}>
-                <ChainGroupTitle>{chainOption.title}</ChainGroupTitle>
-                <ChainGroupItems>
-                  {chainOption.chains.map((chain) => {
-                    const isDiffChain = chain.value !== currentNode.value;
-
-                    const href = isDiffChain
-                      ? `https://${chain.domain || chain.value}.statescan.io`
-                      : "#/";
-
-                    return (
-                      <ChainGroupItem
-                        key={chain.value}
-                        href={href}
-                        target={isDiffChain ? "_blank" : ""}
-                      >
-                        {chain.icon}
-                        <ChainGroupItemName>
-                          <span>{chain.name}</span>
-                          <ChainGroupItemCaretWrapper>
-                            <CaretRightIcon />
-                          </ChainGroupItemCaretWrapper>
-                        </ChainGroupItemName>
-                      </ChainGroupItem>
-                    );
-                  })}
-                </ChainGroupItems>
-              </ChainGroup>
-            ))}
-          </ChainGroupWrapper>
-        </Options>
-      )}
     </Wrapper>
   );
 }
