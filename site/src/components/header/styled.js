@@ -30,15 +30,15 @@ export const Dropdown = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 8px;
-  cursor: pointer;
+  cursor: default;
 
   svg {
     margin-right: 8px;
   }
 
-  :hover {
-    border-color: ${(p) => p.theme.theme500};
-  }
+  // :hover {
+  //   border-color: ${(p) => p.theme.theme500};
+  // }
 
   ${(p) =>
     p.active &&
