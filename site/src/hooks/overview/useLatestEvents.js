@@ -24,7 +24,6 @@ export default function useLatestEvents() {
     api
       .fetch(eventListApi, { page: 1, pageSize: 5 })
       .then((resp) => {
-        console.log({ resp });
         setEvents(resp.result.items || []);
         setLoading(false);
       })

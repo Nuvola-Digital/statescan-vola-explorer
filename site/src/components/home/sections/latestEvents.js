@@ -66,10 +66,6 @@ const Tooltip = styled(TooltipOrigin)`
 `;
 
 function LatestEvents({ events, loading }) {
-  const chainSetting = useSelector(chainSettingSelector);
-
-  console.log({ events });
-
   const listItems = events?.slice(0, 5)?.map((event) => {
     return {
       icon: <TransferSquareIcon />,
