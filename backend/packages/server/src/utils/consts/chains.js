@@ -29,6 +29,7 @@ const chains = Object.freeze({
   "bridgehub-kusama": "bridgehub-kusama",
   "bridgehub-westend": "bridgehub-westend",
   laos: "laos",
+  vola: "vola",
 });
 
 const ss58Format = Object.freeze({
@@ -60,6 +61,7 @@ const ss58Format = Object.freeze({
   [chains["bridgehub-polkadot"]]: 0,
   [chains["bridgehub-kusama"]]: 2,
   [chains["bridgehub-westend"]]: 42,
+  [chains["vola"]]: 42,
 });
 
 function getSs58Format(chain) {
