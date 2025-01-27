@@ -35,6 +35,8 @@ import NodeSwitch from "../nodeSwitch";
 import MobileNodeSwitch from "./mobileNodeSwitch";
 import { getIsSimpleMode } from "../../utils/env";
 import getBusinessMenus from "../../utils/consts/menu";
+import VolaLogo from "../icons/VolaLogo";
+import { Title } from "../home/sections/styled";
 
 const headerHeight = 68;
 
@@ -139,9 +141,12 @@ export default function Header() {
           onClick={() => {
             dispatch(closeMobileMenu());
           }}
-          className=" lin"
+          style={{ display: "flex", alignItems: "center", gap: "16px" }}
         >
-          <StyleLogo />
+          <VolaLogo style={{ width: "fit-content", height: "40" }} />
+          <Title style={{ display: "inline", fontSize: "1.5em" }}>
+            Explorer
+          </Title>
         </LogoLink>
 
         <PC>
