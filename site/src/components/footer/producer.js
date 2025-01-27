@@ -51,8 +51,8 @@ const Text = styled.p`
 export default function Producer() {
   return (
     <Wrapper>
-      <Text>{`© ${new Date().getFullYear()} Statescan Explorer`}</Text>
-      <PC>
+      <Text>{`© ${new Date().getFullYear()} Vola Explorer`}</Text>
+      {/* <PC>
         <Text>·</Text>
       </PC>
       <div className="wrap-on-mobile">
@@ -64,7 +64,7 @@ export default function Producer() {
         >
           <StyledLogo />
         </a>
-      </div>
+      </div> */}
     </Wrapper>
   );
 }

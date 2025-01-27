@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { ReactComponent as Github } from "./github.svg";
 import { ReactComponent as X } from "./x.svg";
-import { ReactComponent as Element } from "./element.svg";
+import { ReactComponent as Discord } from "./discord.svg";
 import { gap_x } from "../../styles/tailwindcss";
 
 const Wrapper = styled.div`
@@ -35,26 +35,33 @@ export default function SocialMedia() {
   return (
     <Wrapper>
       <Link
-        href="https://github.com/opensquare-network/"
+        href="https://github.com/Nuvola-Digital/"
         target="_blank"
         referrerPolicy="no-referrer"
       >
         <Github width={20} height={20} />
       </Link>
       <Link
-        href="https://twitter.com/OpensquareN"
+        href="https://x.com/nuvoladigital/"
         target="_blank"
         referrerPolicy="no-referrer"
       >
         <X width={20} height={20} />
       </Link>
       <Link
+        href="https://discord.gg/tXsjXTpj"
+        target="_blank"
+        referrerPolicy="no-referrer"
+      >
+        <Discord width={20} height={20} />
+      </Link>
+      {/* <Link
         href="https://app.element.io/#/room/#opensquare:matrix.org"
         target="_blank"
         referrerPolicy="no-referrer"
       >
         <Element width={20} height={20} />
-      </Link>
+      </Link> */}
     </Wrapper>
   );
 }
