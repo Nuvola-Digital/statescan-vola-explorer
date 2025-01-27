@@ -53,7 +53,7 @@ export default function Explore() {
 
   return (
     <div>
-      <Title>{settings.name} Explorer</Title>
+      {/* <Title>{settings.name} Explorer</Title> */}
       <Wrapper style={{ gap: 16 }}>
         <ExploreInput ref={exploreRef} />
         <ExploreButton dark={isDark} onClick={handleExplore}>
