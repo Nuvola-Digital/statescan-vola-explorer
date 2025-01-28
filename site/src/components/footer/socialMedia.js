@@ -49,7 +49,7 @@ export default function SocialMedia() {
         <X width={20} height={20} />
       </Link>
       <Link
-        href="https://discord.gg/tXsjXTpj"
+        href="https://discord.gg/nuvola"
         target="_blank"
         referrerPolicy="no-referrer"
       >
