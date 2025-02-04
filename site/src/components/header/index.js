@@ -143,7 +143,7 @@ export default function Header() {
           }}
           style={{ display: "flex", alignItems: "center", gap: "16px" }}
         >
-          <VolaLogo style={{ width: "fit-content", height: "40" }} />
+          <VolaLogo style={{ width: "fit-content", height: "40px" }} />
           <Title style={{ display: "inline", fontSize: "1.5em" }}>
             Explorer
           </Title>
