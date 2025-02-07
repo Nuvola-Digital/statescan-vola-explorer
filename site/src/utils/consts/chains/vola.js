@@ -12,7 +12,7 @@ const vola = {
   icon: <VolaLogo width={20} height={20} />,
   // identity: "vola",
   value: "vola",
-  symbol: "VOLA",
+  symbol: "tVOLA",
   decimals: 12,
   color: "rgba(8, 145, 178, 1)",
   colorSecondary: "rgba(6, 182, 212, 1)",
