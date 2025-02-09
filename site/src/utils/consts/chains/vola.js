@@ -2,8 +2,8 @@ import VolaLogo from "../../../components/icons/VolaLogo";
 
 const nodes = [
   {
-    name: "Node00",
-    url: "wss://rpc-private.volanetwork.io/",
+    name: "VolaRPC00",
+    url: "wss://rpc-devnet-0.volanetwork.io/",
   },
 ];
 
