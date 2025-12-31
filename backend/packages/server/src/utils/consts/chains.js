@@ -174,6 +174,7 @@ const transferOnBlockChains = [
   chains.ajuna,
   chains["fintra-testnet"],
   chains.frequency,
+  chains.vola,
 ];
 
 module.exports = {
