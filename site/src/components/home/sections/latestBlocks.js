@@ -1,6 +1,6 @@
 import { Flex, FlexEnd } from "../../styled/flex";
 import styled from "styled-components";
-import { Inter_12_500, Inter_14_600 } from "../../../styles/text";
+import { Inter_12_500, Inter_14_600, Inter_20_500 } from "../../../styles/text";
 import React from "react";
 import { timeDuration } from "../../../utils/viewFuncs/time";
 import Link from "../../styled/link";
@@ -20,6 +20,7 @@ const ThemeText = styled.p`
 
 const BlockHeight = styled(ThemeText)`
   margin-bottom: 4px;
+  ${Inter_20_500}
 `;
 
 const Time = styled.span`

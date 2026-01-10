@@ -1,23 +1,24 @@
 import { toPrecision } from "@osn/common";
 import { useSelector } from "react-redux";
 import { withLoading } from "../../../HOC/withLoading";
+import useOverview from "../../../hooks/overview/useOverview";
 import { chainSettingSelector } from "../../../store/reducers/settingSlice";
 import { currencify } from "../../../utils";
+import ValueDisplay from "../../displayValue";
 import AssetSquareIcon from "../../icons/assetSquareIcon";
 import BlockSquareIcon from "../../icons/blockSquareIcon";
 import ExtrinsicsSquareIcon from "../../icons/extrinsicsSquareIcon";
 import FinalizedBlockSquareIcon from "../../icons/finalizedBlockSquareIcon";
-import HolderSquareIcon from "../../icons/holderSquareIcon";
-import TransferSquareIcon from "../../icons/transferSquareIcon";
-import Loading from "../../loadings/loading";
-import { StyledPanelTableWrapper } from "../../styled/panel";
-import OverviewItem from "./item";
-import ValueDisplay from "../../displayValue";
-import Tooltip from "../../tooltip";
 import NftSquareIcon from "../../icons/nftSquareIcon";
 import ParaIdSquareIcon from "../../icons/paraIdSquareIcon";
+import TransferSquareIcon from "../../icons/transferSquareIcon";
+import WalletIcon from "../../icons/WalletIcon";
+import Loading from "../../loadings/loading";
+import { StyledPanelTableWrapper } from "../../styled/panel";
+import Tooltip from "../../tooltip";
+import { Title } from "../sections/styled";
+import OverviewItem from "./item";
 import { OverviewItemsWrapper, OverviewPanel } from "./styled";
-import useOverview from "../../../hooks/overview/useOverview";
 
 const mapLoadingState = (_props) => {
   return {
@@ -34,9 +35,9 @@ function Overview() {
   function issuancePrecision(issuance) {
     return toPrecision(issuance ?? 0, chainSetting.decimals);
   }
-
   return (
-    <StyledPanelTableWrapper>
+    <StyledPanelTableWrapper className="pp">
+      <Title>Block Overview</Title>
       <OverviewPanel>
         <OverviewItemsWrapper>
           <OverviewItem
@@ -84,8 +85,8 @@ function Overview() {
           )}
 
           <OverviewItem
-            icon={<HolderSquareIcon />}
-            label="Accounts"
+            icon={<WalletIcon />}
+            label="Wallets"
             value={currencify(overview.accounts)}
           />
 

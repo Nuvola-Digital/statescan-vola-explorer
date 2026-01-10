@@ -6,7 +6,7 @@ const customTheme = chainSetting?.customTheme?.dark || {};
 
 const dark = {
   ...light,
-  fontPrimary: "#FFFFFF",
+  fontPrimary: "#F8FAFC",
   fontPrimaryInverse: "#fff",
   fontSecondary: "rgba(255, 255, 255, 0.55)",
   fontTertiary: "rgba(255, 255, 255, 0.25)",
@@ -22,6 +22,8 @@ const dark = {
   fillPopupHover: "#2D323C",
   fillSub: "#2D323D",
   fillBase: "#1B202C",
+  fillSecondary:"#373C45",
+  fillSecondaryHover:"#334155",
   fillButton: "#1B202C",
   fillTooltip: "rgba(0, 0, 0, 0.85)",
   fillPanelBlanket: "rgba(34, 39, 50, 0.8)",
@@ -35,6 +37,7 @@ const dark = {
   theme500: chainSetting?.color,
   theme100: chainSetting?.colorSecondary,
   fontButtonTag: "#fff",
+  defaultOutline: "#4B5563",
   ...customTheme,
 };
 
