@@ -34,6 +34,7 @@ async function getEvents(ctx) {
   }
 
   const col = await getEventCollection();
+  const total = await col.countDocuments();
   const items = await col
     .find(q, { projection: { _id: 0 } })
     .sort({ "indexer.blockHeight": -1, "indexer.eventIndex": 1 })
@@ -45,6 +46,7 @@ async function getEvents(ctx) {
     items,
     page,
     pageSize,
+    total,
   };
 }
 
