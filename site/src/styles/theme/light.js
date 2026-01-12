@@ -22,8 +22,8 @@ const light = {
   fillSubDark: "#262B37",
   fillBase: "#F8F8F9",
   fillButton: "#1b202c",
-  fillSecondary:"#373C45",
-  fillSecondaryHover:"#334155",
+  fillSecondary: "#373C45",
+  fillSecondaryHover: "#334155",
   fillTooltip: "rgba(0, 0, 0, 0.85)",
   fillGradientIcon:
     "linear-gradient(135deg, rgba(27, 32, 44, 0.05) 0%, rgba(27, 32, 44, 0) 100%)",
@@ -37,12 +37,14 @@ const light = {
   fillPositive: "#52CC8A",
   fillNegative: "#ee4444",
   fillPending: "#FFBB37",
+  secondaryContainer: "#1E293B",
+  surfaceContainerHigh: "#1A212B",
+  tabOutline: "#374151",
   theme500: chainSetting?.color,
   theme100: chainSetting?.colorSecondary,
   fontButtonTag: "#fff",
-  defaultOutline: "#4B5563", 
+  defaultOutline: "#4B5563",
   ...customTheme,
 };
 
 export default light;
-  

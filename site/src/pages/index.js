@@ -4,6 +4,8 @@ import Overview from "../components/home/overview";
 import Sections from "../components/home/sections";
 import HomeLayout from "../components/layout/home";
 import { m_t } from "../styles/tailwindcss";
+import Analytics from "../components/home/analytics";
+import VolaStorageStats from "../components/home/vola-storage-stats";
 
 const SectionsWrapper = styled.div`
   ${m_t(16)};
@@ -20,6 +22,8 @@ function Home() {
         <Overview />
       </OverviewWrapper>
 
+      {/* <Analytics /> */}
+      <VolaStorageStats />
       <SectionsWrapper>
         <Sections />
       </SectionsWrapper>

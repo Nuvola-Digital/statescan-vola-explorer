@@ -5,13 +5,13 @@ import useOverview from "../../../hooks/overview/useOverview";
 import { chainSettingSelector } from "../../../store/reducers/settingSlice";
 import { currencify } from "../../../utils";
 import ValueDisplay from "../../displayValue";
+import AccountIcon from "../../icons/accountIcon";
 import AssetSquareIcon from "../../icons/assetSquareIcon";
 import BlockSquareIcon from "../../icons/blockSquareIcon";
-import ExtrinsicsSquareIcon from "../../icons/extrinsicsSquareIcon";
 import FinalizedBlockSquareIcon from "../../icons/finalizedBlockSquareIcon";
 import NftSquareIcon from "../../icons/nftSquareIcon";
 import ParaIdSquareIcon from "../../icons/paraIdSquareIcon";
-import TransferSquareIcon from "../../icons/transferSquareIcon";
+import TotalEventsIcon from "../../icons/totalEvents";
 import WalletIcon from "../../icons/WalletIcon";
 import Loading from "../../loadings/loading";
 import { StyledPanelTableWrapper } from "../../styled/panel";
@@ -36,7 +36,7 @@ function Overview() {
     return toPrecision(issuance ?? 0, chainSetting.decimals);
   }
   return (
-    <StyledPanelTableWrapper className="pp">
+    <StyledPanelTableWrapper>
       <Title>Block Overview</Title>
       <OverviewPanel>
         <OverviewItemsWrapper>
@@ -51,29 +51,9 @@ function Overview() {
             value={currencify(overview.finalizedHeight)}
           />
           <OverviewItem
-            icon={<ExtrinsicsSquareIcon />}
-            label="Signed Extrinsics"
-            value={currencify(overview.signedExtrinsics)}
-          />
-          <OverviewItem
-            icon={<TransferSquareIcon />}
-            label="Transfers"
-            value={currencify(overview.transfers)}
-          />
-          <OverviewItem
-            icon={<AssetSquareIcon />}
-            label={`Total Issuance (${chainSetting.symbol})`}
-            value={
-              <Tooltip
-                tip={currencify(
-                  Number(issuancePrecision(overview.totalIssuance)),
-                )}
-              >
-                <ValueDisplay
-                  value={issuancePrecision(overview.totalIssuance)}
-                />
-              </Tooltip>
-            }
+            icon={<AccountIcon />}
+            label="Validators Nodes"
+            value={currencify(overview.validators)}
           />
 
           {chainSetting.para && (
@@ -89,7 +69,11 @@ function Overview() {
             label="Wallets"
             value={currencify(overview.accounts)}
           />
-
+          <OverviewItem
+            icon={<TotalEventsIcon />}
+            label="Total Events"
+            value={currencify(overview.totalEvents)}
+          />
           {modules?.assets && (
             <OverviewItem
               icon={<AssetSquareIcon />}
@@ -116,6 +100,21 @@ function Overview() {
               />
             </>
           )}
+          <OverviewItem
+            icon={<AssetSquareIcon />}
+            label={`Circulating Supply (${chainSetting.symbol})`}
+            value={
+              <Tooltip
+                tip={currencify(
+                  Number(issuancePrecision(overview.circulatingSupply)),
+                )}
+              >
+                <ValueDisplay
+                  value={issuancePrecision(overview.circulatingSupply)}
+                />
+              </Tooltip>
+            }
+          />
         </OverviewItemsWrapper>
       </OverviewPanel>
     </StyledPanelTableWrapper>
