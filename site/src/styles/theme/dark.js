@@ -35,6 +35,7 @@ const dark = {
   fillNegative: "#ee4444",
   fillPending: "#FFBB37",
   secondaryContainer: "#1E293B",
+  secondaryContainerHover: "#334155",
   surfaceContainerHigh: "#1A212B",
   tabOutline: "#374151",
   theme500: chainSetting?.color,

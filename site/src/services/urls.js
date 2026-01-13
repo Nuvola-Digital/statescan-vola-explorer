@@ -1,6 +1,7 @@
 // NOTE: all api endpoints here
 
 export const overviewApi = "/overview";
+export const statsApi = "https://indexer.nuvoladrive.dev/stats";
 export const latestBlocksApi = "/latest-blocks";
 export const latestTransfersApi = "/latest-transfers";
 

@@ -26,10 +26,10 @@ export default function useOverview() {
       .fetch(overviewApi)
       .then((resp) => {
         setOverview(resp.result || {});
-        setLoading(false);
+        setLoading(true);
       })
       .finally(() => {
-        setIsFetching(false);
+        setIsFetching(true);
       });
   }, [isFetching, setOverview, setIsFetching, setLoading]);
 

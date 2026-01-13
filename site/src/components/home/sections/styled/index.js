@@ -60,6 +60,7 @@ export const StyledPanel = styled(Panel)`
 
 export const Title = styled.h2`
   ${Inter_18_700};
+  margin-bottom: 20px;
   color: ${(props) => props.theme.fontPrimary};
 `;
 

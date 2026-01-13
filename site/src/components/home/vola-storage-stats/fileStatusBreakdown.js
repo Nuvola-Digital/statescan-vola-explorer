@@ -29,8 +29,8 @@ const StatusLabel = styled.p`
   margin: 0px;
 `;
 const StatusValue = styled.p`
-  color: ${(p) => p.theme.fontPrimary};
-  font-size: 14px;
+  color: ${(p) => p.theme.fontTertiary};
+  font-size: 12px;
   margin: 0px;
 `;
 function FileStatusBreakdown({ committed, uncommitted, expired }) {
