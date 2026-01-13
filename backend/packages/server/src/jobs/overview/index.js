@@ -46,6 +46,13 @@ async function updateHeightsAndIssuance() {
 
     const circulatingSupply = BigInt(overview.totalIssuance) - totalBalance;
     overview.circulatingSupply = circulatingSupply.toString();
+
+    const currentEpoch = await api.query.timeframe.epochNow();
+    const epochRevenue = await api.query.storageEarnings.epochRevenues(
+      currentEpoch,
+    );
+    overview.currentEpochRevenue = epochRevenue.toString();
+    overview.currentEpoch = currentEpoch.toString();
   }
 }
 

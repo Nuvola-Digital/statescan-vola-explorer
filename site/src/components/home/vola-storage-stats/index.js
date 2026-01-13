@@ -26,14 +26,24 @@ import {
   TabWrapper,
 } from "./styled";
 import TabItem from "./tabItem";
+import useOverview from "../../../hooks/overview/useOverview";
+import { useSelector } from "react-redux";
+import { chainSettingSelector } from "../../../store/reducers/settingSlice";
+import { toPrecision } from "@osn/common";
 
 function VolaStorageStats() {
   const [activeTab, setActiveTab] = useState("overview");
   const [contentHeight, setContentHeight] = useState("auto");
   const { volaStats } = useVolaStats();
+  const { overview } = useOverview();
+
   const contentWrapperRef = useRef(null);
   const tabContentRefs = useRef({});
+  const chainSetting = useSelector(chainSettingSelector);
 
+  function issuancePrecision(issuance) {
+    return toPrecision(issuance ?? 0, chainSetting.decimals);
+  }
   const tabs = [
     { id: "overview", label: "Overview" },
     { id: "nodes", label: "Nodes & Operation" },
@@ -91,6 +101,9 @@ function VolaStorageStats() {
       expiredPercentage: getPercentage(volaStats?.files?.expired, total),
     };
   };
+  const currentEpochEarnedVola = issuancePrecision(
+    overview?.currentEpochRevenue || 1,
+  );
   return (
     <StyledPanelTableWrapper>
       <Title>Vola Storage Stats</Title>
@@ -150,9 +163,11 @@ function VolaStorageStats() {
                 />
                 <TabItem
                   label="Storage Fee Revenues"
-                  value="1,245,678 VOLA"
+                  value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
                   icon={<AccountIcon />}
-                  description="Total storage fee revenue for epoch #432"
+                  description={`Total storage fee revenue for epoch #${
+                    overview?.currentEpoch || "---"
+                  }`}
                 />
               </TabItemWrapper>
             </TabContent>
@@ -227,9 +242,11 @@ function VolaStorageStats() {
                 />
                 <TabItem
                   label="Storage Fee Revenues"
-                  value="1,245,678 VOLA"
+                  value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
                   icon={<GraphIncrementIcon />}
-                  description="Total storage fee revenue for epoch #432"
+                  description={`Total storage fee revenue for epoch #${
+                    overview?.currentEpoch || "---"
+                  }`}
                 />
                 <FileStatusBreakdown
                   committed={`${currencify(volaStats?.files?.active)}  (${
