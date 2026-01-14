@@ -2,10 +2,11 @@ const Router = require("koa-router");
 const { getBlockEvents } = require("./controllers/blockEvents");
 const { getBlockExtrinsics } = require("./controllers/blockExtrinsics");
 const { getBlock } = require("./controllers/block");
-const { getBlocks } = require("./controllers/blocks");
+const { getBlocks, getChart } = require("./controllers/blocks");
 const { getLatestOverviewBlocks } = require("./controllers/latestBlocks");
 
 const router = new Router();
+router.get("/chart", getChart)
 router.get("/blocks", getBlocks);
 router.get("/latest-blocks", getLatestOverviewBlocks);
 router.get("/blocks/:heightOrHash", getBlock);

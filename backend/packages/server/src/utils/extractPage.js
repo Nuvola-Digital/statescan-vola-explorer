@@ -27,6 +27,24 @@ function extractPage(ctx = {}) {
   };
 }
 
+function extractDateRange(ctx = {}) {
+  const { start: startTs, end: endTs, interval: intervalMs } = ctx.query || {};
+  let start = Date.now() - 5 * 60 * 60 * 1000; // from 5 hour ago
+  let end = Date.now();
+  let interval = 60 * 60 * 1000; // 1 hour
+  if (parseInt(startTs)) {
+    start = parseInt(startTs);
+  }
+  if (parseInt(endTs)) {
+    end = parseInt(endTs);
+  }
+  if (parseInt(intervalMs)) {
+    interval = parseInt(intervalMs);
+  }
+  return { start, end, interval };
+}
+
 module.exports = {
   extractPage,
+  extractDateRange
 };
