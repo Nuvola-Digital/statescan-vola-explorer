@@ -2,60 +2,75 @@ import { useMemo, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useTheme } from "styled-components";
 import "../../../components/charts/config";
-import useEventChartData from "../../../hooks/overview/useEventChartData";
+import useEventAndVolumeChartData from "../../../hooks/overview/useEventAndVolumeChartData";
 import useTimeRangeParams from "../../../hooks/overview/useTimeRangeParams";
 import {
-  createDualAxisDataset,
   createDualAxisChartOptions,
+  createDualAxisDataset,
 } from "../../../utils/chartHelpers";
 import {
   CHART_TIME_RANGE,
   CHART_TIME_RANGE_ITEMS,
 } from "../../../utils/constants";
 import Loading from "../../loadings/loading";
-import { Section, StyledPanel, Title } from "../sections/styled";
+import { Section, StyledPanel } from "../sections/styled";
 import { Label } from "../vola-storage-stats/styled";
 import { ChartWrapper, Header, NoData, TabButton, TabsList } from "./styled";
-import useExtrinsicChartData from "../../../hooks/overview/useExtrinsicChartData";
 
 function TotalEventsChart() {
-  const [timeRange, setTimeRange] = useState(CHART_TIME_RANGE.ONE_DAY);
+  const [timeRange, setTimeRange] = useState(CHART_TIME_RANGE.ONE_WEEK);
   const chartRef = useRef(null);
   const theme = useTheme();
 
   const { start, end, interval } = useTimeRangeParams(timeRange);
-  const { chartData, loading } = useEventChartData(start, end, interval);
-  const { chartData: extrinsicChartData, loading: extrinsicLoading } =
-    useExtrinsicChartData(start, end, interval);
+  const { eventData, volumeData, loading } = useEventAndVolumeChartData(
+    start,
+    end,
+    interval,
+  );
 
   const { data, options } = useMemo(() => {
-    if (loading || extrinsicLoading) {
-      return { data: null, options: null };
-    }
-
+    const parsedVolumeData = volumeData.map((item) => ({
+      interval: item.interval_start,
+      file_volume: item.file_volume,
+    }));
     const data = createDualAxisDataset(
-      chartData,
-      extrinsicChartData,
+      eventData,
+      parsedVolumeData,
       "totalEvents",
-      "totalExtrinsics",
+      "file_volume",
       "Total Events",
-      "Total Extrinsics",
+      "Total Volume",
       "#06B6D4",
       "#10B981",
     );
-    const options = data ? createDualAxisChartOptions(theme) : null;
+    const options = data
+      ? {
+          ...createDualAxisChartOptions(theme, "#10B981"),
+          animation: {
+            duration: 750,
+            easing: "easeInOutQuart",
+          },
+          transitions: {
+            active: {
+              animation: {
+                duration: 400,
+              },
+            },
+          },
+        }
+      : null;
     return { data, options };
-  }, [chartData, extrinsicChartData, loading, extrinsicLoading, theme]);
+  }, [eventData, volumeData, theme]);
 
   return (
     <Section>
-      <Title>Total Events</Title>
       <StyledPanel>
         <Header>
           <div>
-            <Label size="14">Events & Extrinsics</Label>
+            <Label size="14">Events & Volume</Label>
             <Label size="12" muted>
-              Total events and extrinsics over the last{" "}
+              Total events and volume over the last{" "}
               {timeRange === CHART_TIME_RANGE.ONE_DAY
                 ? "24 hours"
                 : timeRange === CHART_TIME_RANGE.ONE_WEEK
@@ -76,7 +91,7 @@ function TotalEventsChart() {
           </TabsList>
         </Header>
         <ChartWrapper>
-          {loading || extrinsicLoading ? (
+          {loading ? (
             <NoData>
               <Loading />
             </NoData>

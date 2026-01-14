@@ -1,15 +1,17 @@
 import { useCallback, useEffect } from "react";
 import { createGlobalState, useEffectOnce, useInterval } from "react-use";
 import api from "../../services/api";
-import { eventChartApi } from "../../services/urls";
+import { eventChartApi, volumeChartApi } from "../../services/urls";
 
-const useGlobalData = createGlobalState({});
+const useGlobalEventData = createGlobalState([]);
+const useGlobalVolumeData = createGlobalState([]);
 const useGlobalLoading = createGlobalState(true);
 const useGlobalFetching = createGlobalState(false);
 const useGlobalInitialized = createGlobalState(false);
 
-export default function useEventChartData(start, end, interval) {
-  const [chartData, setChartData] = useGlobalData();
+export default function useEventAndVolumeChartData(start, end, interval) {
+  const [eventData, setEventData] = useGlobalEventData();
+  const [volumeData, setVolumeData] = useGlobalVolumeData();
   const [loading, setLoading] = useGlobalLoading();
   const [isFetching, setIsFetching] = useGlobalFetching();
   const [initialized, setInitialized] = useGlobalInitialized();
@@ -22,36 +24,34 @@ export default function useEventChartData(start, end, interval) {
     setIsFetching(true);
 
     // Build query params if parameters are provided
-    let url = eventChartApi;
-    if (start !== undefined && end !== undefined && interval !== undefined) {
-      const params = new URLSearchParams({
-        start: start.toString(),
-        end: end.toString(),
-        interval: interval.toString(),
-      });
-      url = `${eventChartApi}?${params.toString()}`;
-    }
+    const params =
+      start !== undefined && end !== undefined && interval !== undefined
+        ? `?${new URLSearchParams({
+            start: start.toString(),
+            end: end.toString(),
+            interval: interval.toString(),
+          }).toString()}`
+        : "";
 
-    api
-      .fetch(url)
-      .then((resp) => {
-        setChartData(resp.result || {});
+    const eventUrl = `${eventChartApi}${params}`;
+    const volumeUrl = `${volumeChartApi}${params}`;
+
+    // Fetch both in parallel
+    Promise.all([api.fetch(eventUrl), api.fetch(volumeUrl)])
+      .then(([eventResp, volumeResp]) => {
+        setEventData(eventResp.result || []);
+        setVolumeData(volumeResp.result || []);
         setLoading(false);
         setInitialized(true);
+      })
+      .catch(() => {
+        setLoading(false);
       })
       .finally(() => {
         setIsFetching(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isFetching,
-    setChartData,
-    setIsFetching,
-    setLoading,
-    start,
-    end,
-    interval,
-  ]);
+  }, [isFetching, start, end, interval]);
 
   useEffectOnce(fetchChartData);
 
@@ -71,5 +71,5 @@ export default function useEventChartData(start, end, interval) {
     fetchChartData();
   }, 12000);
 
-  return { chartData, loading };
+  return { eventData, volumeData, loading };
 }

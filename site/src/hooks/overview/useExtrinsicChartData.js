@@ -6,11 +6,13 @@ import { extrinsicChartApi } from "../../services/urls";
 const useGlobalData = createGlobalState({});
 const useGlobalLoading = createGlobalState(true);
 const useGlobalFetching = createGlobalState(false);
+const useGlobalInitialized = createGlobalState(false);
 
 export default function useExtrinsicChartData(start, end, interval) {
   const [chartData, setChartData] = useGlobalData();
   const [loading, setLoading] = useGlobalLoading();
   const [isFetching, setIsFetching] = useGlobalFetching();
+  const [initialized, setInitialized] = useGlobalInitialized();
 
   const fetchChartData = useCallback(() => {
     if (isFetching) {
@@ -35,10 +37,12 @@ export default function useExtrinsicChartData(start, end, interval) {
       .then((resp) => {
         setChartData(resp.result || {});
         setLoading(false);
+        setInitialized(true);
       })
       .finally(() => {
         setIsFetching(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isFetching,
     setChartData,
@@ -54,7 +58,10 @@ export default function useExtrinsicChartData(start, end, interval) {
   useEffect(() => {
     // Refetch when parameters change
     if (start !== undefined && end !== undefined && interval !== undefined) {
-      setLoading(true);
+      // Only show loading on initial load, not on subsequent fetches
+      if (!initialized) {
+        setLoading(true);
+      }
       fetchChartData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

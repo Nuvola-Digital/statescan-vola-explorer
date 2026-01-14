@@ -2,24 +2,24 @@ import { useMemo, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useTheme } from "styled-components";
 import "../../../components/charts/config";
+import useChartGradient from "../../../hooks/overview/useChartGradient";
+import useExtrinsicChartData from "../../../hooks/overview/useExtrinsicChartData";
+import useTimeRangeParams from "../../../hooks/overview/useTimeRangeParams";
+import {
+  createChartDataset,
+  createChartOptions,
+} from "../../../utils/chartHelpers";
 import {
   CHART_TIME_RANGE,
   CHART_TIME_RANGE_ITEMS,
 } from "../../../utils/constants";
 import Loading from "../../loadings/loading";
-import { Section, StyledPanel, Title } from "../sections/styled";
+import { Section, StyledPanel } from "../sections/styled";
 import { Label } from "../vola-storage-stats/styled";
-import useExtrinsicChartData from "../../../hooks/overview/useExtrinsicChartData";
-import useTimeRangeParams from "../../../hooks/overview/useTimeRangeParams";
-import useChartGradient from "../../../hooks/overview/useChartGradient";
-import {
-  createChartDataset,
-  createChartOptions,
-} from "../../../utils/chartHelpers";
-import { ChartWrapper, NoData, Header, TabsList, TabButton } from "./styled";
+import { ChartWrapper, Header, NoData, TabButton, TabsList } from "./styled";
 
 function TotalExtrinsicsChart() {
-  const [timeRange, setTimeRange] = useState(CHART_TIME_RANGE.ONE_DAY);
+  const [timeRange, setTimeRange] = useState(CHART_TIME_RANGE.ONE_WEEK);
   const chartRef = useRef(null);
   const theme = useTheme();
 
@@ -34,13 +34,27 @@ function TotalExtrinsicsChart() {
       "Total Extrinsics",
       gradient,
     );
-    const options = data ? createChartOptions(theme, "Total Extrinsics") : null;
+    const options = data
+      ? {
+          ...createChartOptions(theme, "Total Extrinsics"),
+          animation: {
+            duration: 750,
+            easing: "easeInOutQuart",
+          },
+          transitions: {
+            active: {
+              animation: {
+                duration: 400,
+              },
+            },
+          },
+        }
+      : null;
     return { data, options };
   }, [chartData, gradient, theme]);
 
   return (
     <Section>
-      <Title>Total Extrinsics</Title>
       <StyledPanel>
         <Header>
           <div>

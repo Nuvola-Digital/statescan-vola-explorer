@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export function createDualAxisChartOptions(theme) {
+export function createDualAxisChartOptions(theme, y2color = "#F472B6") {
   return {
     responsive: true,
     maintainAspectRatio: false,
@@ -74,6 +74,7 @@ export function createDualAxisChartOptions(theme) {
             }
             return value;
           },
+          color: y2color,
         },
       },
     },
