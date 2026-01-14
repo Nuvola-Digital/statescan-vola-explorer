@@ -135,8 +135,8 @@ export const FullSizedItemWrapper = styled.div`
 
 export const Label = styled.div`
   color: ${(p) => (p.muted ? p.theme.fontTertiary : p.theme.fontPrimary)};
-  font-size: ${(size) => size || "12px"};
-  line-height: 16px;
+  font-size: ${(p) => (p.size ? p.size + "px" : "12px")};
+  line-height: ${(p) => (p.size ? Math.round(p.size * 1.4) + "px" : "16px")};
 `;
 
 export const TabContentCard = styled.div``;

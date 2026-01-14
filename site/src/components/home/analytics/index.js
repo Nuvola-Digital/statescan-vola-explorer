@@ -1,3 +1,4 @@
+import useChartData from "../../../hooks/overview/useChartData";
 import { StyledPanelTableWrapper } from "../../styled/panel";
 import Events from "../sections/blockAndTransfers/events";
 import { SectionsWrapper } from "../sections/styled";

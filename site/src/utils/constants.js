@@ -789,6 +789,14 @@ export const ASSET_ANALYTICS_RANGE = {
 
 export const ASSET_ANALYTICS_RANGE_ITEMS = Object.values(ASSET_ANALYTICS_RANGE);
 
+export const CHART_TIME_RANGE = {
+  ONE_DAY: "1d",
+  ONE_WEEK: "1w",
+  ONE_MONTH: "1m",
+};
+
+export const CHART_TIME_RANGE_ITEMS = Object.values(CHART_TIME_RANGE);
+
 export const TREASURY_ACCOUNT =
   "F3opxRbN5ZbjJNU511Kj2TLuzFcDq9BGduA9TgiECafpg29";
 
