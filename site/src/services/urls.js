@@ -1,7 +1,9 @@
 // NOTE: all api endpoints here
 
 export const overviewApi = "/overview";
-export const chartDataApi = "/chart";
+export const eventChartApi = "/events/chart";
+export const extrinsicChartApi = "/extrinsics/chart";
+
 export const statsApi = "https://indexer.nuvoladrive.dev/stats";
 export const latestBlocksApi = "/latest-blocks";
 export const latestTransfersApi = "/latest-transfers";

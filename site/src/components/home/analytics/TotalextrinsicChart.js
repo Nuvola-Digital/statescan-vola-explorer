@@ -2,12 +2,6 @@ import { useMemo, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useTheme } from "styled-components";
 import "../../../components/charts/config";
-import useEventChartData from "../../../hooks/overview/useEventChartData";
-import useTimeRangeParams from "../../../hooks/overview/useTimeRangeParams";
-import {
-  createDualAxisDataset,
-  createDualAxisChartOptions,
-} from "../../../utils/chartHelpers";
 import {
   CHART_TIME_RANGE,
   CHART_TIME_RANGE_ITEMS,
@@ -15,47 +9,45 @@ import {
 import Loading from "../../loadings/loading";
 import { Section, StyledPanel, Title } from "../sections/styled";
 import { Label } from "../vola-storage-stats/styled";
-import { ChartWrapper, Header, NoData, TabButton, TabsList } from "./styled";
 import useExtrinsicChartData from "../../../hooks/overview/useExtrinsicChartData";
+import useTimeRangeParams from "../../../hooks/overview/useTimeRangeParams";
+import useChartGradient from "../../../hooks/overview/useChartGradient";
+import {
+  createChartDataset,
+  createChartOptions,
+} from "../../../utils/chartHelpers";
+import { ChartWrapper, NoData, Header, TabsList, TabButton } from "./styled";
 
-function TotalEventsChart() {
+function TotalExtrinsicsChart() {
   const [timeRange, setTimeRange] = useState(CHART_TIME_RANGE.ONE_DAY);
   const chartRef = useRef(null);
   const theme = useTheme();
 
   const { start, end, interval } = useTimeRangeParams(timeRange);
-  const { chartData, loading } = useEventChartData(start, end, interval);
-  const { chartData: extrinsicChartData, loading: extrinsicLoading } =
-    useExtrinsicChartData(start, end, interval);
+  const { chartData, loading } = useExtrinsicChartData(start, end, interval);
+  const gradient = useChartGradient(chartRef, chartData);
 
   const { data, options } = useMemo(() => {
-    if (loading || extrinsicLoading) {
-      return { data: null, options: null };
-    }
-
-    const data = createDualAxisDataset(
+    const data = createChartDataset(
       chartData,
-      extrinsicChartData,
-      "totalEvents",
       "totalExtrinsics",
-      "Total Events",
       "Total Extrinsics",
-      "#06B6D4",
-      "#10B981",
+      gradient,
     );
-    const options = data ? createDualAxisChartOptions(theme) : null;
+    const options = data ? createChartOptions(theme, "Total Extrinsics") : null;
     return { data, options };
-  }, [chartData, extrinsicChartData, loading, extrinsicLoading, theme]);
+  }, [chartData, gradient, theme]);
 
   return (
     <Section>
-      <Title>Total Events</Title>
+      <Title>Total Extrinsics</Title>
       <StyledPanel>
         <Header>
           <div>
-            <Label size="14">Events & Extrinsics</Label>
+            <Label size="14">Transaction Status</Label>
+
             <Label size="12" muted>
-              Total events and extrinsics over the last{" "}
+              Total number of events over the last{" "}
               {timeRange === CHART_TIME_RANGE.ONE_DAY
                 ? "24 hours"
                 : timeRange === CHART_TIME_RANGE.ONE_WEEK
@@ -76,7 +68,7 @@ function TotalEventsChart() {
           </TabsList>
         </Header>
         <ChartWrapper>
-          {loading || extrinsicLoading ? (
+          {loading ? (
             <NoData>
               <Loading />
             </NoData>
@@ -91,4 +83,4 @@ function TotalEventsChart() {
   );
 }
 
-export default TotalEventsChart;
+export default TotalExtrinsicsChart;

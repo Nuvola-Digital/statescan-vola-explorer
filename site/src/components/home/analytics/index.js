@@ -1,16 +1,15 @@
-import useChartData from "../../../hooks/overview/useChartData";
 import { StyledPanelTableWrapper } from "../../styled/panel";
-import Events from "../sections/blockAndTransfers/events";
 import { SectionsWrapper } from "../sections/styled";
 import TotalEventsChart from "./TotalEventsChart";
+import TotalExtrinsicsChart from "./TotalextrinsicChart";
 
 function Analytics() {
   return (
     <StyledPanelTableWrapper>
       <SectionsWrapper>
+        <TotalExtrinsicsChart />
         <TotalEventsChart />
         {/* <Transfers /> */}
-        <Events />
       </SectionsWrapper>
     </StyledPanelTableWrapper>
   );
