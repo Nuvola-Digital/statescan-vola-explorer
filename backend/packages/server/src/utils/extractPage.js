@@ -44,7 +44,28 @@ function extractDateRange(ctx = {}) {
   return { start, end, interval };
 }
 
+function getBoundariesByInterval(
+  startTs,
+  endTs,
+  interval,
+) {
+  if (endTs - startTs < interval)
+    throw new Error(
+      'Invalid interval, interval should be smaller than difference between start and end',
+    );
+  const intervals = [];
+  let current = startTs
+  const end = endTs + interval; //since upper bound is exclusive, we need to add an interval to the end date
+
+  while (current <= end) {
+    intervals.push(current);
+    current = current + interval; // Move to the next interval
+  }
+  return intervals;
+};
+
 module.exports = {
   extractPage,
-  extractDateRange
+  extractDateRange,
+  getBoundariesByInterval
 };
