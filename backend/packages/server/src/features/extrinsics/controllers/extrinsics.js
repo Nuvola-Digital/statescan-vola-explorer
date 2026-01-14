@@ -1,9 +1,57 @@
-const { extractPage } = require("../../../utils");
+const { extractPage, extractDateRange, getBoundariesByInterval } = require("../../../utils");
 const {
   block: { getExtrinsicCollection },
 } = require("@statescan/mongo");
 const { getTimeDimension } = require("../../../common/getTimeDimension");
 const { getCallQueryParams } = require("../../../common/getCallParams");
+
+async function getChart(ctx) {
+  const col = await getExtrinsicCollection();
+  const { start, end, interval } = extractDateRange(ctx);
+  const intervals = getBoundariesByInterval(start, end, interval);
+  const totalBeforeStart = await col.countDocuments({"indexer.blockTime": {$lt: start}});
+  const distribution = await col.aggregate([
+    {
+      $match: {
+        "indexer.blockTime": {
+          $gte: start,
+          $lt: end,
+        },
+      },
+    },
+    {
+      $bucket: {
+        groupBy: "$indexer.blockTime",
+        boundaries: intervals,
+        default: null,
+        output: {
+          totalExtrinsics: {
+            $sum: 1
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        interval: "$_id",
+        _id: 0,
+        totalExtrinsics: 1
+      }
+    }
+  ]).toArray();
+
+  const distributionMap = new Map(distribution.map((x) => [x.interval, x.totalExtrinsics]));
+  let totalExtrinsics = totalBeforeStart;
+  const chart = intervals.map((interval) => {
+    const totalExtrinsicsInInterval = distributionMap.get(interval) || 0;
+    totalExtrinsics += totalExtrinsicsInInterval;
+    return {
+      interval,
+      totalExtrinsics
+    }
+  })
+  ctx.body = chart;
+}
 
 async function getExtrinsics(ctx) {
   const { page, pageSize } = extractPage(ctx);
@@ -38,4 +86,5 @@ async function getExtrinsics(ctx) {
 
 module.exports = {
   getExtrinsics,
+  getChart
 };

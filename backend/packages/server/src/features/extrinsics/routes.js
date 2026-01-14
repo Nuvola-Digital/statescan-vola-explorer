@@ -2,7 +2,7 @@ const Router = require("koa-router");
 const { getExtrinsicEvents } = require("./controllers/extrinsicEvents");
 const { getExtrinsicCalls } = require("./controllers/calls");
 const { getExtrinsic } = require("./controllers/extrinsic");
-const { getExtrinsics } = require("./controllers/extrinsics");
+const { getExtrinsics, getChart } = require("./controllers/extrinsics");
 const { getExtrinsicTransfers } = require("./controllers/extrinsicTransfers");
 const {
   getExtrinsicUniqueTransfers,
@@ -10,6 +10,7 @@ const {
 
 const router = new Router();
 router.get("/extrinsics", getExtrinsics);
+router.get("/extrinsics/chart", getChart);
 router.get("/extrinsics/:indexOrHash", getExtrinsic);
 router.get("/extrinsics/:blockHeight-:extrinsicIndex/calls", getExtrinsicCalls);
 router.get(
