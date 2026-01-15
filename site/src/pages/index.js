@@ -16,7 +16,7 @@ const OverviewWrapper = styled.div``;
 function Home() {
   return (
     <HomeLayout>
-      <Explore />
+      {/* <Explore /> */}
 
       <OverviewWrapper>
         <Overview />

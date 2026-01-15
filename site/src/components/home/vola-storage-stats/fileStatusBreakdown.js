@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { FullSizedItemWrapper, Label } from "./styled";
 import { flex } from "../../../styles/tailwindcss";
+import { Label } from "./styled";
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;

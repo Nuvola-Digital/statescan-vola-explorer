@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion } from "framer-motion";
 function AnimatedContent({ children, delay = 0 }) {
   return (
     <motion.div
