@@ -1,5 +1,10 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { toPrecision } from "@osn/common";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import useOverview from "../../../hooks/overview/useOverview";
 import useVolaStats from "../../../hooks/overview/useVolaStats";
+import { chainSettingSelector } from "../../../store/reducers/settingSlice";
 import { currencify } from "../../../utils";
 import { humanReadableStorage } from "../../../utils/humanReadableStorage";
 import AccountIcon from "../../icons/accountIcon";
@@ -18,7 +23,6 @@ import {
   FullSizedItemWrapper,
   Label,
   TabButton,
-  TabContent,
   TabContentWrapper,
   TabItemWrapper,
   TabsContainer,
@@ -26,17 +30,13 @@ import {
   TabWrapper,
 } from "./styled";
 import TabItem from "./tabItem";
-import useOverview from "../../../hooks/overview/useOverview";
-import { useSelector } from "react-redux";
-import { chainSettingSelector } from "../../../store/reducers/settingSlice";
-import { toPrecision } from "@osn/common";
-
+import { useTheme } from "styled-components";
 function VolaStorageStats() {
   const [activeTab, setActiveTab] = useState("overview");
   const [contentHeight, setContentHeight] = useState("auto");
   const { volaStats } = useVolaStats();
   const { overview } = useOverview();
-
+  const theme = useTheme();
   const contentWrapperRef = useRef(null);
   const tabContentRefs = useRef({});
   const chainSetting = useSelector(chainSettingSelector);
@@ -46,7 +46,7 @@ function VolaStorageStats() {
   }
   const tabs = [
     { id: "overview", label: "Overview" },
-    { id: "nodes", label: "Nodes & Operation" },
+    { id: "nodes", label: "Nodes & Operations" },
     { id: "files", label: "Files & Revenue" },
   ];
 
@@ -116,152 +116,267 @@ function VolaStorageStats() {
                 active={activeTab === tab.id}
                 onClick={() => handleTabChange(tab.id)}
               >
-                {tab.label}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="active-tab-bg"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      zIndex: 0,
+                      backgroundColor: theme.secondaryContainerHover,
+                      borderRadius: "8px",
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span style={{ zIndex: 1 }}>{tab.label}</span>
               </TabButton>
             ))}
           </TabsList>
-
-          <TabContentWrapper
-            ref={contentWrapperRef}
-            style={{ height: contentHeight }}
-          >
-            <TabContent
-              active={activeTab === "overview"}
-              ref={(el) => (tabContentRefs.current["overview"] = el)}
+          <LayoutGroup>
+            <TabContentWrapper
+              ref={contentWrapperRef}
+              style={{ height: contentHeight }}
             >
-              <TabItemWrapper>
-                <TabItem
-                  label="Active Storage Nodes"
-                  value={volaStats?.nodes?.active ?? "---"}
-                  icon={<StorageIcon />}
-                  description="Total active storage nodes on the network."
-                />
-                <TabItem
-                  label="Active Storage"
-                  value={
-                    humanReadableStorage(volaStats?.nodes?.activeStorage) ??
-                    "---"
-                  }
-                  icon={<DbStorageIcon />}
-                  description="Total active storage including Active and Draining states."
-                />
-                <TabItem
-                  label="Used Storage"
-                  value={
-                    humanReadableStorage(volaStats?.files?.usedStorage) ?? "---"
-                  }
-                  icon={<StoragePieIcon />}
-                  description="Total file size representing storage utilization"
-                  bottom={
-                    <ProgressBar
-                      bottomLeft={"Utilization"}
-                      bottomRight={`${storageUsedPercentage}%`}
-                      percentage={storageUsedPercentage}
-                      color={"#FAFAFA"}
-                    />
-                  }
-                />
-                <TabItem
-                  label="Storage Fee Revenues"
-                  value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
-                  icon={<AccountIcon />}
-                  description={`Total storage fee revenue for epoch #${
-                    overview?.currentEpoch || "---"
-                  }`}
-                />
-              </TabItemWrapper>
-            </TabContent>
+              <AnimatePresence mode="popLayout" initial={false}>
+                {activeTab === "overview" && (
+                  <motion.div
+                    key="overview"
+                    ref={(el) => {
+                      tabContentRefs.current["overview"] = el;
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                    style={{
+                      width: "100%",
+                      height: "fit-content",
+                    }}
+                  >
+                    <TabItemWrapper>
+                      <TabItem
+                        layoutId={"card-1"}
+                        label="Active Storage Nodes"
+                        value={volaStats?.nodes?.active ?? "---"}
+                        icon={<StorageIcon />}
+                        description="Total active storage nodes on the network."
+                      />
+                      <TabItem
+                        layoutId={"card-2"}
+                        label="Active Storage"
+                        value={
+                          humanReadableStorage(
+                            volaStats?.nodes?.activeStorage,
+                          ) ?? "---"
+                        }
+                        icon={<DbStorageIcon />}
+                        description="Total active storage including Active and Draining states."
+                      />
+                      <TabItem
+                        layoutId={"card-3"}
+                        label="Used Storage"
+                        value={
+                          humanReadableStorage(volaStats?.files?.usedStorage) ??
+                          "---"
+                        }
+                        icon={<StoragePieIcon />}
+                        description="Total file size representing storage utilization"
+                        bottom={
+                          <ProgressBar
+                            bottomLeft={"Utilization"}
+                            bottomRight={`${storageUsedPercentage}%`}
+                            percentage={storageUsedPercentage}
+                            color={"#FAFAFA"}
+                          />
+                        }
+                      />
+                      <TabItem
+                        layoutId={"card-4"}
+                        label="Storage Fee Revenues"
+                        value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
+                        icon={<AccountIcon />}
+                        description={`Total storage fee revenue for epoch #${
+                          overview?.currentEpoch || "---"
+                        }`}
+                      />
+                    </TabItemWrapper>
+                  </motion.div>
+                )}
+                {activeTab === "nodes" && (
+                  <motion.div
+                    key="nodes"
+                    ref={(el) => {
+                      tabContentRefs.current["nodes"] = el;
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    <TabItemWrapper>
+                      <TabItem
+                        layoutId={"card-1"}
+                        label="Active Storage Nodes"
+                        value={volaStats?.nodes?.active ?? "---"}
+                        icon={<StorageIcon />}
+                        description="Total active storage nodes on the network."
+                      />
+                      <TabItem
+                        layoutId={"card-2"}
+                        label={"Node Operators"}
+                        value={volaStats?.nodes?.nodeOperators ?? "---"}
+                        icon={<OperatorsIcon />}
+                        description="Unique node operators count"
+                      />
+                      <FullSizedItemWrapper
+                        layoutId={"card-3"}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                        layout
+                      >
+                        <motion.p
+                          key="node-dist-label"
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.15 }}
+                          className="text-sm text-foreground"
+                        >
+                          <Label size="14px">Node Distribution</Label>
+                        </motion.p>
+                        <motion.div
+                          key="progress-active"
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.2 }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProgressBar
+                            topLeft={"Active Nodes"}
+                            topRight={volaStats?.nodes?.active}
+                            percentage={ActiveNodesPercentage}
+                            color={"#FAFAFA"}
+                          />
+                        </motion.div>
 
-            <TabContent
-              active={activeTab === "nodes"}
-              ref={(el) => (tabContentRefs.current["nodes"] = el)}
-            >
-              <TabItemWrapper>
-                <TabItem
-                  label="Active Storage Nodes"
-                  value={volaStats?.nodes?.active ?? "---"}
-                  icon={<StorageIcon />}
-                  description="Total active storage nodes on the network."
-                />
-                <TabItem
-                  label="Node Operators"
-                  value={volaStats?.nodes?.nodeOperators ?? "---"}
-                  icon={<OperatorsIcon />}
-                  description="Unique node operators count"
-                />
-                <FullSizedItemWrapper>
-                  <Label size="14px">Node Distribution</Label>
-                  <ProgressBar
-                    topLeft={"Active Nodes"}
-                    topRight={volaStats?.nodes?.active}
-                    percentage={ActiveNodesPercentage}
-                    color={"#FAFAFA"}
-                  />
-                  <ProgressBar
-                    topLeft={"Draining Nodes"}
-                    topRight={volaStats?.nodes?.draining}
-                    percentage={DrainingNodesPercentage}
-                    color={"#FAFAFA"}
-                  />
-                </FullSizedItemWrapper>
-              </TabItemWrapper>
-            </TabContent>
-
-            <TabContent
-              active={activeTab === "files"}
-              ref={(el) => (tabContentRefs.current["files"] = el)}
-            >
-              <TabItemWrapper>
-                <TabItem
-                  label="Total Files (All Time)"
-                  value={volaStats?.files?.total ?? "---"}
-                  icon={<FileIcon />}
-                  description="Total number of files including uncommitted, committed, and expired."
-                />
-                <TabItem
-                  label="Active Files"
-                  value={volaStats?.files?.active ?? "---"}
-                  icon={<CheckCircleIcon />}
-                  description="Committed file count only"
-                />
-                <TabItem
-                  label="Used Storage"
-                  value={
-                    humanReadableStorage(volaStats?.files?.usedStorage) ?? "---"
-                  }
-                  icon={<StoragePieIcon />}
-                  description="Total file size representing storage utilization"
-                  bottom={
-                    <ProgressBar
-                      bottomLeft={"Utilization"}
-                      bottomRight={`${storageUsedPercentage}%`}
-                      percentage={storageUsedPercentage}
-                      color={"#FAFAFA"}
-                    />
-                  }
-                />
-                <TabItem
-                  label="Storage Fee Revenues"
-                  value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
-                  icon={<GraphIncrementIcon />}
-                  description={`Total storage fee revenue for epoch #${
-                    overview?.currentEpoch || "---"
-                  }`}
-                />
-                <FileStatusBreakdown
-                  committed={`${currencify(volaStats?.files?.active)}  (${
-                    getFileStatusPercentage().committedPercentage
-                  }%)`}
-                  uncommitted={`${currencify(volaStats?.files?.uncommitted)} (${
-                    getFileStatusPercentage().uncommittedPercentage
-                  }%)`}
-                  expired={`${currencify(volaStats?.files?.expired)} (${
-                    getFileStatusPercentage().expiredPercentage
-                  }%)`}
-                />
-              </TabItemWrapper>
-            </TabContent>
-          </TabContentWrapper>
+                        <motion.div
+                          key="progress-draining"
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.2 }}
+                          style={{ width: "100%" }}
+                        >
+                          <ProgressBar
+                            topLeft={"Draining Nodes"}
+                            topRight={volaStats?.nodes?.draining}
+                            percentage={DrainingNodesPercentage}
+                            color={"#FAFAFA"}
+                          />
+                        </motion.div>
+                      </FullSizedItemWrapper>
+                    </TabItemWrapper>
+                  </motion.div>
+                )}
+                {activeTab === "files" && (
+                  <motion.div
+                    key="files"
+                    ref={(el) => {
+                      tabContentRefs.current["files"] = el;
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    <TabItemWrapper>
+                      <TabItem
+                        layoutId={"card-1"}
+                        label="Total Files (All Time)"
+                        value={volaStats?.files?.total ?? "---"}
+                        icon={<FileIcon />}
+                        description="Total number of files including uncommitted, committed, and expired."
+                      />
+                      <TabItem
+                        label="Active Files"
+                        layoutId={"card-2"}
+                        value={volaStats?.files?.active ?? "---"}
+                        icon={<CheckCircleIcon />}
+                        description="Committed file count only"
+                      />
+                      <TabItem
+                        label="Used Storage"
+                        layoutId={"card-3"}
+                        value={
+                          humanReadableStorage(volaStats?.files?.usedStorage) ??
+                          "---"
+                        }
+                        icon={<StoragePieIcon />}
+                        description="Total file size representing storage utilization"
+                        bottom={
+                          <ProgressBar
+                            bottomLeft={"Utilization"}
+                            bottomRight={`${storageUsedPercentage}%`}
+                            percentage={storageUsedPercentage}
+                            color={"#FAFAFA"}
+                          />
+                        }
+                      />
+                      <TabItem
+                        layoutId={"card-4"}
+                        label="Storage Fee Revenues"
+                        value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
+                        icon={<GraphIncrementIcon />}
+                        description={`Total storage fee revenue for epoch #${
+                          overview?.currentEpoch || "---"
+                        }`}
+                      />
+                      <FullSizedItemWrapper
+                        layout
+                        layoutId="card-5"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: 0.3,
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                      >
+                        <FileStatusBreakdown
+                          committed={`${currencify(
+                            volaStats?.files?.active,
+                          )}  (${
+                            getFileStatusPercentage().committedPercentage
+                          }%)`}
+                          uncommitted={`${currencify(
+                            volaStats?.files?.uncommitted,
+                          )} (${
+                            getFileStatusPercentage().uncommittedPercentage
+                          }%)`}
+                          expired={`${currencify(volaStats?.files?.expired)} (${
+                            getFileStatusPercentage().expiredPercentage
+                          }%)`}
+                        />
+                      </FullSizedItemWrapper>
+                    </TabItemWrapper>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </TabContentWrapper>
+          </LayoutGroup>
         </TabsContainer>
       </TabWrapper>
     </StyledPanelTableWrapper>

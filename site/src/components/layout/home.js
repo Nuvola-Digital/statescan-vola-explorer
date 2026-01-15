@@ -7,8 +7,8 @@ const Layout = styled(LayoutOrigin)`
   flex-direction: column;
   min-height: 100vh;
   main {
-    margin-top: 80px;
-     ${space_y(80)};
+    margin-top: 32px;
+    ${space_y(32)};
   }
 `;
 

@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { mdcss, mobilecss } from "../../../styles/responsive";
 import { flex, flex_col, justify_between } from "../../../styles/tailwindcss";
 import { Flex } from "../../styled/flex";
+import { motion } from "framer-motion";
 
 export const TabWrapper = styled.div`
   background: ${(p) => p.theme.fillPanel};
@@ -73,18 +74,15 @@ export const TabButton = styled.button`
   &:focus-visible {
     outline: 2px solid ${(p) => p.theme.theme500};
     outline-offset: 2px;
+    background-color: transparent;
   }
 
   ${(p) =>
     p.active &&
     `
-    background-color: ${p.theme.secondaryContainerHover || "#ffffff"};
+    background-color: transparent;
     color: ${p.theme.fontPrimary};
     
-    &:hover {
-      background-color: ${p.theme.secondaryContainerHover || "#ffffff"};
-      color: ${p.theme.fontPrimary};
-    }
   `}
 `;
 
@@ -118,7 +116,7 @@ export const TabPanel = styled.div`
   min-height: 400px;
 `;
 
-export const FullSizedItemWrapper = styled.div`
+export const FullSizedItemWrapper = styled(motion.div)`
   grid-column: span 2;
   background-color: ${(p) => p.theme.surfaceContainerHigh};
   border: 1px solid ${(p) => p.theme.defaultOutline};

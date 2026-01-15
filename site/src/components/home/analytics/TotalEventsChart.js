@@ -30,15 +30,12 @@ function TotalEventsChart() {
   );
 
   const { data, options } = useMemo(() => {
-    const parsedVolumeData = volumeData.map((item) => ({
-      interval: item.interval_start,
-      file_volume: item.file_volume,
-    }));
+    const parsedVolumeData = volumeData;
     const data = createDualAxisDataset(
       eventData,
       parsedVolumeData,
       "totalEvents",
-      "file_volume",
+      "fileVolume",
       "Total Events",
       "Total Volume",
       "#06B6D4",

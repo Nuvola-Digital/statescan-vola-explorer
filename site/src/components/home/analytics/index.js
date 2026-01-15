@@ -6,7 +6,7 @@ import TotalExtrinsicsChart from "./TotalextrinsicChart";
 function Analytics() {
   return (
     <StyledPanelTableWrapper>
-      <Title>Total Events</Title>
+      <Title>Analytics</Title>
       <SectionsWrapper>
         <TotalExtrinsicsChart />
         <TotalEventsChart />

@@ -8078,6 +8078,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^12.26.2":
+  version: 12.26.2
+  resolution: "framer-motion@npm:12.26.2"
+  dependencies:
+    motion-dom: ^12.26.2
+    motion-utils: ^12.24.10
+    tslib: ^2.4.0
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: f636498ef6abb0f5b8ccbade621d075085bb86bf939932dd4d8d2ad87485bdafb1ab79a1b4e9f580674be570eeab61440ccd5989c888e1c08ac299c798cb747b
+  languageName: node
+  linkType: hard
+
 "fresh@npm:0.5.2":
   version: 0.5.2
   resolution: "fresh@npm:0.5.2"
@@ -10971,6 +10993,22 @@ __metadata:
   version: 2.29.4
   resolution: "moment@npm:2.29.4"
   checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
+  languageName: node
+  linkType: hard
+
+"motion-dom@npm:^12.26.2":
+  version: 12.26.2
+  resolution: "motion-dom@npm:12.26.2"
+  dependencies:
+    motion-utils: ^12.24.10
+  checksum: 598f095c9b92a198bdece3ec262c44992fdbe9430666604ef8c2ffaa69b63e38e2068de239a371dc5bd260624d6fe34751c3cc38cbc40c40fba04a12db7d5d06
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^12.24.10":
+  version: 12.24.10
+  resolution: "motion-utils@npm:12.24.10"
+  checksum: 5ab27ca881f125cfbb9a3f5dac50a763d4ea820fbdd94847fed5cddc457fb30468c4b2e9f7292d89caafbdaee14615b65a7664bcfa10ec123ceebfcecea86885
   languageName: node
   linkType: hard
 
@@ -14058,6 +14096,7 @@ __metadata:
     chartjs-adapter-moment: ^1.0.1
     copy-to-clipboard: ^3.3.2
     eslint: ^8.43.0
+    framer-motion: ^12.26.2
     graphql: ^16.7.1
     is-ipfs: ^8.0.1
     is-utf8: ^0.2.1
@@ -15073,7 +15112,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.7.0, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
+"tslib@npm:^2.0.0, tslib@npm:^2.4.0, tslib@npm:^2.7.0, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a

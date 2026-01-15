@@ -35,7 +35,7 @@ const StatusValue = styled.p`
 `;
 function FileStatusBreakdown({ committed, uncommitted, expired }) {
   return (
-    <FullSizedItemWrapper>
+    <>
       <Label size="14px">File Status Breakdown</Label>
       <ContentWrapper>
         <StatusItem>
@@ -60,7 +60,7 @@ function FileStatusBreakdown({ committed, uncommitted, expired }) {
           <StatusValue>{expired}</StatusValue>
         </StatusItem>
       </ContentWrapper>
-    </FullSizedItemWrapper>
+    </>
   );
 }
 

@@ -1,4 +1,5 @@
 import moment from "moment";
+import humanReadableStorage from "./humanReadableStorage";
 
 export function createDualAxisChartOptions(theme, y2color = "#F472B6") {
   return {
@@ -52,6 +53,7 @@ export function createDualAxisChartOptions(theme, y2color = "#F472B6") {
             }
             return value;
           },
+          maxTicksLimit: 6,
         },
       },
       y1: {
@@ -67,13 +69,9 @@ export function createDualAxisChartOptions(theme, y2color = "#F472B6") {
         },
         ticks: {
           callback(value) {
-            if (value >= 1000000) {
-              return (value / 1000000).toFixed(1) + "M";
-            } else if (value >= 1000) {
-              return (value / 1000).toFixed(1) + "K";
-            }
-            return value;
+            return humanReadableStorage(value);
           },
+          maxTicksLimit: 6,
           color: y2color,
         },
       },
@@ -100,9 +98,13 @@ export function createDualAxisChartOptions(theme, y2color = "#F472B6") {
             return moment(context[0].parsed.x).format("MMM DD, YYYY HH:mm");
           },
           label: (context) => {
-            return `${
-              context.dataset.label
-            }: ${context.parsed.y.toLocaleString()}`;
+            const label = context.dataset.label;
+            const value = context.parsed.y;
+            // Check if this dataset uses y1 axis (secondary axis)
+            if (context.dataset.yAxisID === "y1") {
+              return `${label}: ${humanReadableStorage(value)}`;
+            }
+            return `${label}: ${value.toLocaleString()}`;
           },
         },
       },
