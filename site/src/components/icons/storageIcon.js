@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent } from "./storage.svg";
 
-const StorageIcon = styled(ReactComponent)`
-  path {
-    stroke: ${({ theme }) => theme.fontTertiary};
-  }
-`;
+const StorageIcon = styled(ReactComponent)``;
 
 export default StorageIcon;

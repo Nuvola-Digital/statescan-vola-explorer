@@ -3,8 +3,6 @@ import { no_scroll_bar } from "../../styles";
 import { FlexEnd } from "./flex";
 
 export const Panel = styled.div`
-
-  box-shadow: ${(p) => p.theme.shadowPanel};
   border-radius: 8px;
   overflow: hidden;
 `;

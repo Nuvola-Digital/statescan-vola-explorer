@@ -3,7 +3,8 @@ import { ReactComponent } from "./pulse.svg";
 
 const TotalEventsIcon = styled(ReactComponent)`
   path {
-    stroke: ${({ theme }) => theme.fontTertiary};
+    stroke: none;
+    fill: ${({ theme }) => theme.fontPrimary};
   }
 `;
 

@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent } from "./file.svg";
 
-const FileIcon = styled(ReactComponent)`
-  path {
-    stroke: ${({ theme }) => theme.fontTertiary};
-  }
-`;
+const FileIcon = styled(ReactComponent)``;
 
 export default FileIcon;

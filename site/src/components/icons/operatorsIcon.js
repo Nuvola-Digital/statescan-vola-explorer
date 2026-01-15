@@ -3,7 +3,7 @@ import { ReactComponent } from "./operators.svg";
 
 const OperatorsIcon = styled(ReactComponent)`
   path {
-    stroke: ${({ theme }) => theme.fontTertiary};
+    stroke: ${({ theme }) => theme.fontPrimary};
   }
 `;
 

@@ -3,7 +3,8 @@ import { ReactComponent as BlockSquare } from "./block-square.svg";
 
 const BlockSquareIcon = styled(BlockSquare)`
   path {
-    stroke: ${({ theme }) => theme.fontTertiary};
+    stroke: none;
+    fill: ${({ theme }) => theme.fontPrimary};
   }
 `;
 

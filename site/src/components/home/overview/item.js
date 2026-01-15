@@ -15,9 +15,9 @@ const IconWrapper = styled.div`
   border-radius: 8px;
   width: fit-content;
   height: fit-content;
-  background-color: ${(p) => p.theme.fillSecondary};
+  background-color: ${(p) => p.theme.secondaryContainer};
   &:hover {
-    background-color: ${(p) => p.theme.fillSecondaryHover};
+    background-color: ${(p) => p.theme.secondaryContainerHover};
   }
   & svg {
     display: block;

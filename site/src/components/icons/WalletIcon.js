@@ -1,9 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { ReactComponent as Wallet } from "./wallet.svg";
 const WalletIcon = styled(Wallet)`
   path {
-    stroke: ${(p) => p.theme.fontTertiary};
+    stroke: none;
+    fill: ${({ theme }) => theme.fontPrimary};
   }
 `;
 
-export default WalletIcon
+export default WalletIcon;

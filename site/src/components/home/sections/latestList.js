@@ -37,9 +37,9 @@ const ListItemIcon = styled.div`
   ${flex};
   ${items_center};
   ${justify_center};
-  background-color: ${(p) => p.theme.fillSecondary};
+  background-color: ${(p) => p.theme.containerSecondary};
   &:hover {
-    background-color: ${(p) => p.theme.fillSecondaryHover};
+    background-color: ${(p) => p.theme.containerSecondaryHover};
   }
   & svg {
     display: block;

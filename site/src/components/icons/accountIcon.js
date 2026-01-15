@@ -3,7 +3,8 @@ import { ReactComponent as Account } from "./account.svg";
 
 const AccountIcon = styled(Account)`
   path {
-    stroke: ${(p) => p.theme.fontTertiary};
+    stroke: none;
+    fill: ${({ theme }) => theme.fontPrimary};
   }
 `;
 

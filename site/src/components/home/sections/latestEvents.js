@@ -6,6 +6,7 @@ import { Flex } from "../../styled/flex";
 import Link from "../../styled/link";
 import { TagHighContrast } from "../../tag";
 import LatestList from "./latestList";
+import TransfersIcon from "../../icons/transfersIcon";
 
 const ThemeText = styled.p`
   margin: 0;
@@ -50,7 +51,7 @@ const Time = styled.span`
 function LatestEvents({ events, loading }) {
   const listItems = events?.slice(0, 5)?.map((event) => {
     return {
-      icon: <TransferSquareIcon />,
+      icon: <TransfersIcon />,
       left: (
         <div>
           <Link
