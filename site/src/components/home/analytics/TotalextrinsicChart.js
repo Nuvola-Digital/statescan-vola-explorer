@@ -23,8 +23,8 @@ function TotalExtrinsicsChart() {
   const chartRef = useRef(null);
   const theme = useTheme();
 
-  const { start, end, interval } = useTimeRangeParams(timeRange);
-  const { chartData, loading } = useExtrinsicChartData(start, end, interval);
+  const { start, interval } = useTimeRangeParams(timeRange);
+  const { chartData, loading } = useExtrinsicChartData(start, interval);
   const gradient = useChartGradient(chartRef, chartData);
 
   const { data, options } = useMemo(() => {

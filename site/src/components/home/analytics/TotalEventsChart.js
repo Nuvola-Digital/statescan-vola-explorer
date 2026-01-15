@@ -22,10 +22,10 @@ function TotalEventsChart() {
   const chartRef = useRef(null);
   const theme = useTheme();
 
-  const { start, end, interval } = useTimeRangeParams(timeRange);
+  const { start, interval } = useTimeRangeParams(timeRange);
+
   const { eventData, volumeData, loading } = useEventAndVolumeChartData(
     start,
-    end,
     interval,
   );
 

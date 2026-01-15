@@ -13,7 +13,7 @@ export function humanReadableStorage(bytes, decimals = 2) {
     return "0 Bytes";
   }
 
-  const k = 1024;
+  const k = 1000;
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const i = Math.floor(Math.log(Math.abs(bytes)) / Math.log(k));
   const index = Math.min(i, sizes.length - 1);

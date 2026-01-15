@@ -8,7 +8,7 @@ const useGlobalLoading = createGlobalState(true);
 const useGlobalFetching = createGlobalState(false);
 const useGlobalInitialized = createGlobalState(false);
 
-export default function useExtrinsicChartData(start, end, interval) {
+export default function useExtrinsicChartData(start, interval) {
   const [chartData, setChartData] = useGlobalData();
   const [loading, setLoading] = useGlobalLoading();
   const [isFetching, setIsFetching] = useGlobalFetching();
@@ -23,10 +23,9 @@ export default function useExtrinsicChartData(start, end, interval) {
 
     // Build query params if parameters are provided
     let url = extrinsicChartApi;
-    if (start !== undefined && end !== undefined && interval !== undefined) {
+    if (start !== undefined && interval !== undefined) {
       const params = new URLSearchParams({
         start: start.toString(),
-        end: end.toString(),
         interval: interval.toString(),
       });
       url = `${extrinsicChartApi}?${params.toString()}`;
@@ -43,21 +42,13 @@ export default function useExtrinsicChartData(start, end, interval) {
         setIsFetching(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isFetching,
-    setChartData,
-    setIsFetching,
-    setLoading,
-    start,
-    end,
-    interval,
-  ]);
+  }, [isFetching, setChartData, setIsFetching, setLoading, start, interval]);
 
   useEffectOnce(fetchChartData);
 
   useEffect(() => {
     // Refetch when parameters change
-    if (start !== undefined && end !== undefined && interval !== undefined) {
+    if (start !== undefined && interval !== undefined) {
       // Only show loading on initial load, not on subsequent fetches
       if (!initialized) {
         setLoading(true);
@@ -65,7 +56,7 @@ export default function useExtrinsicChartData(start, end, interval) {
       fetchChartData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [start, end, interval]);
+  }, [start, interval]);
 
   useInterval(() => {
     fetchChartData();

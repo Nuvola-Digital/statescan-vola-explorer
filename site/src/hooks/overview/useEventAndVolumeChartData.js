@@ -9,7 +9,7 @@ const useGlobalLoading = createGlobalState(true);
 const useGlobalFetching = createGlobalState(false);
 const useGlobalInitialized = createGlobalState(false);
 
-export default function useEventAndVolumeChartData(start, end, interval) {
+export default function useEventAndVolumeChartData(start, interval) {
   const [eventData, setEventData] = useGlobalEventData();
   const [volumeData, setVolumeData] = useGlobalVolumeData();
   const [loading, setLoading] = useGlobalLoading();
@@ -25,10 +25,9 @@ export default function useEventAndVolumeChartData(start, end, interval) {
 
     // Build query params if parameters are provided
     const params =
-      start !== undefined && end !== undefined && interval !== undefined
+      start !== undefined && interval !== undefined
         ? `?${new URLSearchParams({
             start: start.toString(),
-            end: end.toString(),
             interval: interval.toString(),
           }).toString()}`
         : "";
@@ -51,13 +50,13 @@ export default function useEventAndVolumeChartData(start, end, interval) {
         setIsFetching(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetching, start, end, interval]);
+  }, [isFetching, start, interval]);
 
   useEffectOnce(fetchChartData);
 
   useEffect(() => {
     // Refetch when parameters change
-    if (start !== undefined && end !== undefined && interval !== undefined) {
+    if (start !== undefined && interval !== undefined) {
       // Only show loading on initial load, not on subsequent fetches
       if (!initialized) {
         setLoading(true);
@@ -65,11 +64,11 @@ export default function useEventAndVolumeChartData(start, end, interval) {
       fetchChartData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [start, end, interval]);
+  }, [start, interval]);
 
   useInterval(() => {
     fetchChartData();
-  }, 12000);
+  }, 1200000);
 
   return { eventData, volumeData, loading };
 }

@@ -62,7 +62,7 @@ export default function useChartData(apiEndpoint) {
 
     useInterval(() => {
       fetchChartData();
-    }, 12000);
+    }, 1200000);
 
     return { chartData, loading };
   };
