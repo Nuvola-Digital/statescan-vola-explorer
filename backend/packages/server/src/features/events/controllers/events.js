@@ -9,7 +9,7 @@ async function getChart(ctx) {
   const col = await getEventCollection();
   const { start, end, interval } = extractDateRange(ctx);
   const intervals = getBoundariesByInterval(start, end, interval);
-  const totalBeforeStart = await col.countDocuments({"indexer.blockTime": {$lt: start}});
+  const totalBeforeStart = await col.countDocuments({ "indexer.blockTime": { $lt: start } });
   const distribution = await col.aggregate([
     {
       $match: {
@@ -42,7 +42,7 @@ async function getChart(ctx) {
 
   const distributionMap = new Map(distribution.map((x) => [x.interval, x.totalEvents]));
   let totalEvents = totalBeforeStart;
-  const chart = intervals.map((interval) => {
+  const chart = intervals.filter((x) => x <= end).map((interval) => {
     const totalEventsInInterval = distributionMap.get(interval) || 0;
     totalEvents += totalEventsInInterval;
     return {

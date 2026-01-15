@@ -42,7 +42,7 @@ async function getChart(ctx) {
 
   const distributionMap = new Map(distribution.map((x) => [x.interval, x.totalExtrinsics]));
   let totalExtrinsics = totalBeforeStart;
-  const chart = intervals.map((interval) => {
+  const chart = intervals.filter((x) => x <= end).map((interval) => {
     const totalExtrinsicsInInterval = distributionMap.get(interval) || 0;
     totalExtrinsics += totalExtrinsicsInInterval;
     return {
