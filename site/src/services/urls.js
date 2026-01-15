@@ -4,8 +4,8 @@ export const overviewApi = "/overview";
 export const eventChartApi = "/events/chart";
 export const extrinsicChartApi = "/extrinsics/chart";
 
-export const statsApi = "https://indexer.nuvoladrive.dev/stats";
-export const volumeChartApi = "https://indexer.nuvoladrive.dev/charts";
+export const statsApi = `${process.env.REACT_APP_PUBLIC_INDEXER_API_END_POINT}/stats`;
+export const volumeChartApi = `${process.env.REACT_APP_PUBLIC_INDEXER_API_END_POINT}/charts`;
 export const latestBlocksApi = "/latest-blocks";
 export const latestTransfersApi = "/latest-transfers";
 

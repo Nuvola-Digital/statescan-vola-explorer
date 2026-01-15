@@ -200,9 +200,7 @@ function VolaStorageStats() {
                         label="Storage Fee Revenues"
                         value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
                         icon={<AccountIcon />}
-                        description={`Total storage fee revenue for epoch #${
-                          overview?.currentEpoch || "---"
-                        }`}
+                        description={`Total storage fee revenue `}
                       />
                     </TabItemWrapper>
                   </motion.div>
@@ -339,9 +337,7 @@ function VolaStorageStats() {
                         label="Storage Fee Revenues"
                         value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
                         icon={<GraphIncrementIcon />}
-                        description={`Total storage fee revenue for epoch #${
-                          overview?.currentEpoch || "---"
-                        }`}
+                        description={`Total storage fee revenue `}
                       />
                       <FullSizedItemWrapper
                         layout

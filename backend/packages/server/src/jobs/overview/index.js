@@ -48,9 +48,7 @@ async function updateHeightsAndIssuance() {
     overview.circulatingSupply = circulatingSupply.toString();
 
     const currentEpoch = await api.query.timeframe.epochNow();
-    const epochRevenue = await api.query.storageEarnings.epochRevenues(
-      currentEpoch,
-    );
+    const epochRevenue = await api.query.storageEarnings.totalRevenue();
     overview.currentEpochRevenue = epochRevenue.toString();
     overview.currentEpoch = currentEpoch.toString();
   }
