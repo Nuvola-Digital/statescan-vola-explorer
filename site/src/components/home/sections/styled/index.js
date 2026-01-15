@@ -6,6 +6,7 @@ import {
   flex_1,
   flex_col,
   gap_x,
+  gap_y,
   justify_between,
   max_w_full,
   no_underline,
@@ -29,14 +30,12 @@ export const Section = styled.div`
 export const SectionsWrapper = styled.div`
   ${flex};
   ${gap_x(24)};
+  ${gap_y(24)};
+  flex-wrap: wrap;
   ${Section} {
     max-width: calc(50% - 12px);
     ${mdcss(max_w_full)};
   }
-
-  ${mdcss(css`
-    display: block;
-  `)}
 `;
 
 export const StyledPanel = styled(Panel)`
