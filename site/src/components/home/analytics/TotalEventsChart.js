@@ -69,9 +69,9 @@ function TotalEventsChart() {
       <StyledPanel>
         <Header>
           <div>
-            <Label size="14">Transaction & Events</Label>
+            <Label size="14">Transactions & Events</Label>
             <Label size="12" muted>
-              Total Number of Events & Transactions (Cumulative) over the last{" "}
+              Total Number of Transactions & Events (cumulative) over the last{" "}
               {timeRange === CHART_TIME_RANGE.ONE_DAY
                 ? "24 Hours"
                 : timeRange === CHART_TIME_RANGE.ONE_WEEK

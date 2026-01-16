@@ -49,7 +49,7 @@ const ListItemIcon = styled.div`
 `;
 
 const ListItem = styled.li`
-  ${p(20)};
+  ${p(16)};
   ${w_full};
   ${flex};
   ${items_center};

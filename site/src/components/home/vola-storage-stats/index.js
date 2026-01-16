@@ -179,7 +179,7 @@ function VolaStorageStats() {
                           ) ?? "---"
                         }
                         icon={<DbStorageIcon />}
-                        description="Total active storage including Active and Draining states."
+                        description="Total active storage capacity on the network."
                       />
                       <TabItem
                         layoutId={"card-3"}
@@ -189,7 +189,7 @@ function VolaStorageStats() {
                           "---"
                         }
                         icon={<StoragePieIcon />}
-                        description="Total file size representing storage utilization"
+                        description="Total capacity utilized on the network."
                         bottom={
                           <ProgressBar
                             bottomLeft={"Utilization"}
@@ -201,10 +201,10 @@ function VolaStorageStats() {
                       />
                       <TabItem
                         layoutId={"card-4"}
-                        label="Storage Fee Revenues"
+                        label="Storage Fee Revenue"
                         value={`${currentEpochEarnedVola} ${chainSetting.symbol} ($ ${currentEpochEarnedVola})`}
                         icon={<AccountIcon />}
-                        description={`Total storage fee revenue `}
+                        description={`Total revenue generated from storage utilization.`}
                       />
                     </TabItemWrapper>
                   </motion.div>
@@ -316,7 +316,7 @@ function VolaStorageStats() {
                         layoutId={"card-2"}
                         value={volaStats?.files?.active ?? "---"}
                         icon={<CheckCircleIcon />}
-                        description="Committed file count only"
+                        description="Total number of committed files."
                       />
                       <TabItem
                         label="Used Storage"
@@ -326,7 +326,7 @@ function VolaStorageStats() {
                           "---"
                         }
                         icon={<StoragePieIcon />}
-                        description="Total file size representing storage utilization"
+                        description="Total capacity utilized on the network."
                         bottom={
                           <ProgressBar
                             bottomLeft={"Utilization"}
@@ -338,10 +338,10 @@ function VolaStorageStats() {
                       />
                       <TabItem
                         layoutId={"card-4"}
-                        label="Storage Fee Revenues"
+                        label="Storage Fee Revenue"
                         value={`${currentEpochEarnedVola} ${chainSetting.symbol} ($ ${currentEpochEarnedVola})`}
                         icon={<GraphIncrementIcon />}
-                        description={`Total storage fee revenue `}
+                        description={`Total revenue generated from storage utilization. `}
                       />
                       <FullSizedItemWrapper
                         layout

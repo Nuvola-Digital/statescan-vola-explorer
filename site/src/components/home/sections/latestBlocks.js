@@ -1,15 +1,14 @@
-import { Flex, FlexEnd } from "../../styled/flex";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Inter_12_500, Inter_14_600, Inter_20_500 } from "../../../styles/text";
-import React from "react";
+import { chainSettingSelector } from "../../../store/reducers/settingSlice";
+import { Inter_12_500, Inter_14_600, Inter_18_500 } from "../../../styles/text";
 import { timeDuration } from "../../../utils/viewFuncs/time";
-import Link from "../../styled/link";
-import Tooltip from "../../tooltip";
+import AddressOrIdentity from "../../address";
 import BlockSquareIcon from "../../icons/blockSquareIcon";
 import FinalizedState from "../../states/finalizedState";
-import { useSelector } from "react-redux";
-import { chainSettingSelector } from "../../../store/reducers/settingSlice";
-import AddressOrIdentity from "../../address";
+import { Flex, FlexEnd } from "../../styled/flex";
+import Link from "../../styled/link";
+import Tooltip from "../../tooltip";
 import LatestList from "./latestList";
 
 const ThemeText = styled.p`
@@ -20,7 +19,7 @@ const ThemeText = styled.p`
 
 const BlockHeight = styled(ThemeText)`
   margin-bottom: 4px;
-  ${Inter_20_500}
+  ${Inter_18_500}
 `;
 
 const Time = styled.span`

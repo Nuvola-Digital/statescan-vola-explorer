@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Inter_12_500, Inter_14_600, Inter_20_500 } from "../../../styles/text";
+import { Inter_12_500, Inter_14_600, Inter_18_500 } from "../../../styles/text";
 import { timeDuration } from "../../../utils/viewFuncs/time";
-import TransferSquareIcon from "../../icons/transferSquareIcon";
+import TransfersIcon from "../../icons/transfersIcon";
 import { Flex } from "../../styled/flex";
 import Link from "../../styled/link";
 import { TagHighContrast } from "../../tag";
 import LatestList from "./latestList";
-import TransfersIcon from "../../icons/transfersIcon";
 
 const ThemeText = styled.p`
   margin: 0;
@@ -16,7 +15,7 @@ const ThemeText = styled.p`
 
 const BlockHeight = styled(ThemeText)`
   margin-bottom: 4px;
-  ${Inter_20_500}
+  ${Inter_18_500}
 `;
 
 const Value = styled.div`

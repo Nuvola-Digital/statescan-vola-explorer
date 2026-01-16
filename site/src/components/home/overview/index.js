@@ -42,7 +42,7 @@ function Overview() {
         <OverviewItemsWrapper>
           <OverviewItem
             icon={<BlockSquareIcon />}
-            label="Latest Blocks"
+            label="Latest Block"
             value={currencify(overview.latestHeight)}
           />
           <OverviewItem
@@ -52,7 +52,7 @@ function Overview() {
           />
           <OverviewItem
             icon={<AccountIcon />}
-            label="Validators Nodes"
+            label="Validators"
             value={currencify(overview.validators)}
           />
 
@@ -66,7 +66,7 @@ function Overview() {
 
           <OverviewItem
             icon={<WalletIcon />}
-            label="Wallets"
+            label="Active Wallets"
             value={currencify(overview.accounts)}
           />
           <OverviewItem

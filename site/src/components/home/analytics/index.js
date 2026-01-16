@@ -6,7 +6,7 @@ import TotalExtrinsicsChart from "./TotalVolumeChart";
 function Analytics() {
   return (
     <StyledPanelTableWrapper>
-      <Title>Analytics</Title>
+      <Title>Vola Network Stats</Title>
       <SectionsWrapper>
         <TotalEventsChart />
         <TotalExtrinsicsChart />
