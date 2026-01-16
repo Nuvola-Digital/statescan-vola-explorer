@@ -87,7 +87,7 @@ function TotalVolumeChart() {
             <Label size="14">Total Storage Volume</Label>
 
             <Label size="12" muted>
-              Total Storage Volume (cumulative) over The Last{" "}
+              Total Storage Volume (cumulative) over the Last{" "}
               {timeRange === CHART_TIME_RANGE.ONE_DAY
                 ? "24 hours"
                 : timeRange === CHART_TIME_RANGE.ONE_WEEK
