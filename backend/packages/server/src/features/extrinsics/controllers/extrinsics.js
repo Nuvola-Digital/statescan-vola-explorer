@@ -9,13 +9,13 @@ async function getChart(ctx) {
   const col = await getExtrinsicCollection();
   const { start, end, interval } = extractDateRange(ctx);
   const intervals = getBoundariesByInterval(start, end, interval);
-  const totalBeforeStart = await col.countDocuments({"indexer.blockTime": {$lt: start}});
+  const totalBeforeStart = await col.countDocuments({"indexer.blockTime": {$lte: start}});
   const distribution = await col.aggregate([
     {
       $match: {
         "indexer.blockTime": {
-          $gte: start,
-          $lt: end,
+          $gt: start,
+          $lte: end,
         },
       },
     },
@@ -42,14 +42,20 @@ async function getChart(ctx) {
 
   const distributionMap = new Map(distribution.map((x) => [x.interval, x.totalExtrinsics]));
   let totalExtrinsics = totalBeforeStart;
-  const chart = intervals.filter((x) => x <= end).map((interval) => {
-    const totalExtrinsicsInInterval = distributionMap.get(interval) || 0;
-    totalExtrinsics += totalExtrinsicsInInterval;
-    return {
-      interval,
-      totalExtrinsics
-    }
-  })
+  const chart = [
+    { interval: start, totalExtrinsics },
+    ...intervals
+      .filter((x) => x > start && x <= end)
+      .map((intervalEnd) => {
+        const intervalStart = intervalEnd - interval;
+        const totalExtrinsicsInInterval = distributionMap.get(intervalStart) || 0;
+        totalExtrinsics += totalExtrinsicsInInterval;
+        return {
+          interval: intervalEnd,
+          totalExtrinsics,
+        };
+      }),
+  ];
   ctx.body = chart;
 }
 

@@ -13,15 +13,15 @@ async function getChart(ctx) {
   const { start, end, interval } = extractDateRange(ctx);
   const intervals = getBoundariesByInterval(start, end, interval);
   const totalBeforeStart = await col.countDocuments({
-    "indexer.blockTime": { $lt: start },
+    "indexer.blockTime": { $lte: start },
   });
   const distribution = await col
     .aggregate([
       {
         $match: {
           "indexer.blockTime": {
-            $gte: start,
-            $lt: end,
+            $gt: start,
+            $lte: end,
           },
         },
       },
@@ -51,16 +51,20 @@ async function getChart(ctx) {
     distribution.map((x) => [x.interval, x.totalEvents]),
   );
   let totalEvents = totalBeforeStart;
-  const chart = intervals
-    .filter((x) => x <= end)
-    .map((interval) => {
-      const totalEventsInInterval = distributionMap.get(interval) || 0;
-      totalEvents += totalEventsInInterval;
-      return {
-        interval,
-        totalEvents,
-      };
-    });
+  const chart = [
+    { interval: start, totalEvents },
+    ...intervals
+      .filter((x) => x > start && x <= end)
+      .map((intervalEnd) => {
+        const intervalStart = intervalEnd - interval;
+        const totalEventsInInterval = distributionMap.get(intervalStart) || 0;
+        totalEvents += totalEventsInInterval;
+        return {
+          interval: intervalEnd,
+          totalEvents,
+        };
+      }),
+  ];
   ctx.body = chart;
 }
 
