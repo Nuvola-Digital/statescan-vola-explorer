@@ -16,7 +16,6 @@ const {
 const overview = {};
 
 async function updateHeightsAndIssuance() {
-  const api = await getApi();
   const col = await getBlockDb().getStatusCol();
   const latest = await col.findOne({ name: "latestHeight" });
   const finalized = await col.findOne({ name: "finalizedHeight" });
@@ -29,28 +28,6 @@ async function updateHeightsAndIssuance() {
   }
   if (issuance) {
     overview.totalIssuance = issuance.value;
-    const accounts = [
-      "5DHkp437qFfVZgLveRtF2dqQNQ3dQGyog6t8CWm5VnR1KbSe",
-      "5HgycssXyZR9ZRz1E2BjPND16gt348NBUKpzo6J5pParKeDc",
-      "5FRTMVserRHhv979wbzq1guvQBqZc4LUbBK6NmeNBTyR8jiT",
-      "5GUL7FQGXTxkkmeVPmHSiffSY35R7ysjHRgru6fhNMJxqUb4",
-      "5EP5Dg5n6voMoGcd6S8MVm1gKNGRqwiojutLSxfaNwvC7x5M",
-      "5HiwEvaQdAx1t2VVSH24oderuYb3pavJrEcgpnyZBXDrgo2f",
-    ];
-
-    const results = await api.query.system.account.multi(accounts);
-    const totalBalance = results.reduce(
-      (sum, r) => sum + r.data.free.toBigInt(),
-      0n,
-    );
-
-    const circulatingSupply = BigInt(overview.totalIssuance) - totalBalance;
-    overview.circulatingSupply = circulatingSupply.toString();
-
-    const currentEpoch = await api.query.timeframe.epochNow();
-    const epochRevenue = await api.query.storageEarnings.totalRevenue();
-    overview.currentEpochRevenue = epochRevenue.toString();
-    overview.currentEpoch = currentEpoch.toString();
   }
 }
 
@@ -132,6 +109,37 @@ async function updateOverview() {
   }
 }
 
+async function getDetailedOverview() {
+  try {
+    const api = await getApi();
+    if (overview.totalIssuance) {
+      const accounts = [
+        "5DHkp437qFfVZgLveRtF2dqQNQ3dQGyog6t8CWm5VnR1KbSe",
+        "5HgycssXyZR9ZRz1E2BjPND16gt348NBUKpzo6J5pParKeDc",
+        "5FRTMVserRHhv979wbzq1guvQBqZc4LUbBK6NmeNBTyR8jiT",
+        "5GUL7FQGXTxkkmeVPmHSiffSY35R7ysjHRgru6fhNMJxqUb4",
+        "5EP5Dg5n6voMoGcd6S8MVm1gKNGRqwiojutLSxfaNwvC7x5M",
+        "5HiwEvaQdAx1t2VVSH24oderuYb3pavJrEcgpnyZBXDrgo2f",
+      ];
+      const results = await api.query.system.account.multi(accounts);
+      const totalBalance = results.reduce(
+        (sum, r) => sum + r.data.free.toBigInt(),
+        0n,
+      );
+
+      const circulatingSupply = BigInt(overview.totalIssuance) - totalBalance;
+      overview.circulatingSupply = circulatingSupply.toString();
+    }
+
+    const currentEpoch = await api.query.timeframe.epochNow();
+    const epochRevenue = await api.query.storageEarnings.totalRevenue();
+    overview.currentEpochRevenue = epochRevenue.toString();
+    overview.currentEpoch = currentEpoch.toString();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 function getOverview() {
   return overview;
 }
@@ -139,4 +147,5 @@ function getOverview() {
 module.exports = {
   updateOverview,
   getOverview,
+  getDetailedOverview
 };
