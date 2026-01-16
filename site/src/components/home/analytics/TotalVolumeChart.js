@@ -26,7 +26,7 @@ function TotalVolumeChart() {
 
   const { start, interval } = useTimeRangeParams(timeRange);
   const { chartData, loading } = useExtrinsicChartData(start, interval);
-  const gradient = useChartGradient(chartRef, chartData);
+  const gradient = useChartGradient(chartRef, chartData, "#F59E0B");
   const Yaxis = useMemo(() => {
     return {
       beginAtZero: false,
@@ -52,6 +52,8 @@ function TotalVolumeChart() {
       "Total File Volume",
       gradient,
       0.25,
+      0,
+      "#F59E0B",
     );
     const options = data
       ? {

@@ -228,6 +228,7 @@ export function createChartDataset(
   gradient,
   tension = 0,
   pointRadius = 0,
+  borderColor = "#06B6D4",
 ) {
   if (!chartData || !Array.isArray(chartData) || chartData.length === 0) {
     return null;
@@ -244,11 +245,11 @@ export function createChartDataset(
         data,
         fill: true,
         backgroundColor: gradient ?? "transparent",
-        borderColor: "#06B6D4",
+        borderColor: borderColor,
         borderWidth: 0.5,
         tension: tension,
         pointRadius: pointRadius,
-        pointBackgroundColor: "#06B6D4",
+        pointBackgroundColor: borderColor,
         pointHoverRadius: 3,
         pointHoverBorderWidth: 2,
         pointHitRadius: 10,
