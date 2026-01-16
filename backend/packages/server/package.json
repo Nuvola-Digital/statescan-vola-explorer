@@ -10,7 +10,8 @@
     }
   ],
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "start:dev": "nodemon src/index.js",
+    "dev": "node src/index.js",
     "lint": "eslint ."
   },
   "dependencies": {
