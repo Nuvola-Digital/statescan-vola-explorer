@@ -47,7 +47,7 @@ function Overview() {
           />
           <OverviewItem
             icon={<FinalizedBlockSquareIcon />}
-            label="Finalized Block"
+            label="Finalized Blocks"
             value={currencify(overview.finalizedHeight)}
           />
           <OverviewItem

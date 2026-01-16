@@ -1,14 +1,14 @@
 import { useCallback, useEffect } from "react";
 import { createGlobalState, useEffectOnce, useInterval } from "react-use";
 import api from "../../services/api";
-import { extrinsicChartApi } from "../../services/urls";
+import { volumeChartApi } from "../../services/urls";
 
 const useGlobalData = createGlobalState({});
 const useGlobalLoading = createGlobalState(true);
 const useGlobalFetching = createGlobalState(false);
 const useGlobalInitialized = createGlobalState(false);
 
-export default function useExtrinsicChartData(start, interval) {
+export default function useVolumeChartData(start, interval) {
   const [chartData, setChartData] = useGlobalData();
   const [loading, setLoading] = useGlobalLoading();
   const [isFetching, setIsFetching] = useGlobalFetching();
@@ -22,13 +22,13 @@ export default function useExtrinsicChartData(start, interval) {
     setIsFetching(true);
 
     // Build query params if parameters are provided
-    let url = extrinsicChartApi;
+    let url = volumeChartApi;
     if (start !== undefined && interval !== undefined) {
       const params = new URLSearchParams({
         start: start.toString(),
         interval: interval.toString(),
       });
-      url = `${extrinsicChartApi}?${params.toString()}`;
+      url = `${volumeChartApi}?${params.toString()}`;
     }
 
     api

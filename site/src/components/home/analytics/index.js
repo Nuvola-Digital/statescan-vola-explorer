@@ -1,15 +1,15 @@
 import { StyledPanelTableWrapper } from "../../styled/panel";
 import { SectionsWrapper, Title } from "../sections/styled";
 import TotalEventsChart from "./TotalEventsChart";
-import TotalExtrinsicsChart from "./TotalextrinsicChart";
+import TotalExtrinsicsChart from "./TotalVolumeChart";
 
 function Analytics() {
   return (
     <StyledPanelTableWrapper>
       <Title>Analytics</Title>
       <SectionsWrapper>
-        <TotalExtrinsicsChart />
         <TotalEventsChart />
+        <TotalExtrinsicsChart />
         {/* <Transfers /> */}
       </SectionsWrapper>
     </StyledPanelTableWrapper>

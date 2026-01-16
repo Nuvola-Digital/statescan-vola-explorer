@@ -1,17 +1,17 @@
 import { useCallback, useEffect } from "react";
 import { createGlobalState, useEffectOnce, useInterval } from "react-use";
 import api from "../../services/api";
-import { eventChartApi, volumeChartApi } from "../../services/urls";
+import { eventChartApi, extrinsicChartApi } from "../../services/urls";
 
 const useGlobalEventData = createGlobalState([]);
-const useGlobalVolumeData = createGlobalState([]);
+const useGlobalTransactionData = createGlobalState([]);
 const useGlobalLoading = createGlobalState(true);
 const useGlobalFetching = createGlobalState(false);
 const useGlobalInitialized = createGlobalState(false);
 
-export default function useEventAndVolumeChartData(start, interval) {
+export default function useEventAndTransactionData(start, interval) {
   const [eventData, setEventData] = useGlobalEventData();
-  const [volumeData, setVolumeData] = useGlobalVolumeData();
+  const [transactionData, setTransactionData] = useGlobalTransactionData();
   const [loading, setLoading] = useGlobalLoading();
   const [isFetching, setIsFetching] = useGlobalFetching();
   const [initialized, setInitialized] = useGlobalInitialized();
@@ -33,13 +33,13 @@ export default function useEventAndVolumeChartData(start, interval) {
         : "";
 
     const eventUrl = `${eventChartApi}${params}`;
-    const volumeUrl = `${volumeChartApi}${params}`;
+    const transactionUrl = `${extrinsicChartApi}${params}`;
 
     // Fetch both in parallel
-    Promise.all([api.fetch(eventUrl), api.fetch(volumeUrl)])
-      .then(([eventResp, volumeResp]) => {
+    Promise.all([api.fetch(eventUrl), api.fetch(transactionUrl)])
+      .then(([eventResp, transactionResp]) => {
         setEventData(eventResp.result || []);
-        setVolumeData(volumeResp.result || []);
+        setTransactionData(transactionResp.result || []);
         setLoading(false);
         setInitialized(true);
       })
@@ -70,5 +70,5 @@ export default function useEventAndVolumeChartData(start, interval) {
     fetchChartData();
   }, 12000);
 
-  return { eventData, volumeData, loading };
+  return { eventData, transactionData, loading };
 }

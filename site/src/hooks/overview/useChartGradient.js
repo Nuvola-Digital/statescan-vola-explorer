@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export default function useChartGradient(chartRef, chartData) {
+export default function useChartGradient(
+  chartRef,
+  chartData,
+  startColor = "rgba(6, 182, 212, 0.60)",
+) {
   const [gradient, setGradient] = useState(null);
 
   useEffect(() => {
@@ -16,12 +20,12 @@ export default function useChartGradient(chartRef, chartData) {
           0,
           chartArea.bottom,
         );
-        gradientFill.addColorStop(0, "rgba(6, 182, 212, 0.60)");
+        gradientFill.addColorStop(0, startColor);
         gradientFill.addColorStop(1, "rgba(0, 25, 31, 0.00)");
         setGradient(gradientFill);
       }
     }
-  }, [chartData, chartRef]);
+  }, [chartData, chartRef, startColor]);
 
   return gradient;
 }

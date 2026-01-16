@@ -104,9 +104,9 @@ function VolaStorageStats() {
       expiredPercentage: getPercentage(volaStats?.files?.expired, total),
     };
   };
-  const currentEpochEarnedVola = issuancePrecision(
-    overview?.currentEpochRevenue || 1,
-  );
+  const currentEpochEarnedVola = Number(
+    issuancePrecision(overview?.currentEpochRevenue || 1),
+  ).toFixed(4);
   return (
     <StyledPanelTableWrapper>
       <Title>Vola Storage Stats</Title>
@@ -202,7 +202,7 @@ function VolaStorageStats() {
                       <TabItem
                         layoutId={"card-4"}
                         label="Storage Fee Revenues"
-                        value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
+                        value={`${currentEpochEarnedVola} ${chainSetting.symbol} ($ ${currentEpochEarnedVola})`}
                         icon={<AccountIcon />}
                         description={`Total storage fee revenue `}
                       />
@@ -339,7 +339,7 @@ function VolaStorageStats() {
                       <TabItem
                         layoutId={"card-4"}
                         label="Storage Fee Revenues"
-                        value={`${currentEpochEarnedVola} ${chainSetting.symbol}`}
+                        value={`${currentEpochEarnedVola} ${chainSetting.symbol} ($ ${currentEpochEarnedVola})`}
                         icon={<GraphIncrementIcon />}
                         description={`Total storage fee revenue `}
                       />
