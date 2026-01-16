@@ -136,7 +136,7 @@ export function createDualAxisChartOptions(
             const value = context.parsed.y;
             // Check if this dataset uses y1 axis (secondary axis)
             if (context.dataset.yAxisID === "y1") {
-              return `${label}: ${humanReadableStorage(value)}`;
+              return `${label}: ${value.toLocaleString()}`;
             }
             return `${label}: ${value.toLocaleString()}`;
           },
