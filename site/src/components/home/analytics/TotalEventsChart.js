@@ -73,10 +73,10 @@ function TotalEventsChart() {
             <Label size="12" muted>
               Total Number of Transactions & Events (cumulative) over the last{" "}
               {timeRange === CHART_TIME_RANGE.ONE_DAY
-                ? "24 Hours"
+                ? "24 hours"
                 : timeRange === CHART_TIME_RANGE.ONE_WEEK
-                ? "7 Days"
-                : "30 Days"}
+                ? "7 days"
+                : "30 days"}
             </Label>
           </div>
           <TabsList>
