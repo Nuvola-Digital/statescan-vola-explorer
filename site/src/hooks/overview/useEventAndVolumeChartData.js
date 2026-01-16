@@ -68,7 +68,7 @@ export default function useEventAndVolumeChartData(start, interval) {
 
   useInterval(() => {
     fetchChartData();
-  }, 1200000);
+  }, 12000);
 
   return { eventData, volumeData, loading };
 }

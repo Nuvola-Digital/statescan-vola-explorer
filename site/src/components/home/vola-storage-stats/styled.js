@@ -137,4 +137,20 @@ export const Label = styled.div`
   line-height: ${(p) => (p.size ? Math.round(p.size * 1.4) + "px" : "16px")};
 `;
 
+export const DesktopLabel = styled.span`
+  z-index: 1;
+  display: inline;
+  ${mobilecss(css`
+    display: none;
+  `)}
+`;
+
+export const MobileLabel = styled.span`
+  z-index: 1;
+  display: none;
+  ${mobilecss(css`
+    display: inline;
+  `)}
+`;
+
 export const TabContentCard = styled.div``;

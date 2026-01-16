@@ -20,8 +20,10 @@ import { Title } from "../sections/styled";
 import FileStatusBreakdown from "./fileStatusBreakdown";
 import ProgressBar from "./progressBar";
 import {
+  DesktopLabel,
   FullSizedItemWrapper,
   Label,
+  MobileLabel,
   TabButton,
   TabContentWrapper,
   TabItemWrapper,
@@ -31,6 +33,7 @@ import {
 } from "./styled";
 import TabItem from "./tabItem";
 import { useTheme } from "styled-components";
+
 function VolaStorageStats() {
   const [activeTab, setActiveTab] = useState("overview");
   const [contentHeight, setContentHeight] = useState("auto");
@@ -45,9 +48,9 @@ function VolaStorageStats() {
     return toPrecision(issuance ?? 0, chainSetting.decimals);
   }
   const tabs = [
-    { id: "overview", label: "Overview" },
-    { id: "nodes", label: "Nodes & Operations" },
-    { id: "files", label: "Files & Revenue" },
+    { id: "overview", label: "Overview", mbLabel: "Overview" },
+    { id: "nodes", label: "Nodes & Operations", mbLabel: "Nodes" },
+    { id: "files", label: "Files & Revenue", mbLabel: "Files" },
   ];
 
   // Update height when active tab changes
@@ -132,7 +135,8 @@ function VolaStorageStats() {
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <span style={{ zIndex: 1 }}>{tab.label}</span>
+                <DesktopLabel>{tab.label}</DesktopLabel>
+                <MobileLabel>{tab.mbLabel}</MobileLabel>
               </TabButton>
             ))}
           </TabsList>
