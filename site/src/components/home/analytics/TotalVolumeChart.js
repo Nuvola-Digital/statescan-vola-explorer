@@ -42,6 +42,7 @@ function TotalVolumeChart() {
         callback(value) {
           return humanReadableStorage(value);
         },
+        maxTicksLimit: 7,
       },
     };
   }, [theme]);

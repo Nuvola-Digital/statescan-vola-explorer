@@ -56,7 +56,7 @@ export function createDualAxisChartOptions(
           dash: [3, 3],
         },
         ticks: {
-          maxTicksLimit: 6,
+          maxTicksLimit: 7,
         },
       },
       y: {
@@ -81,7 +81,7 @@ export function createDualAxisChartOptions(
             }
             return value;
           },
-          maxTicksLimit: 6,
+          maxTicksLimit: 7,
         },
       },
       y1: {
@@ -104,7 +104,7 @@ export function createDualAxisChartOptions(
             }
             return value;
           },
-          maxTicksLimit: 6,
+          maxTicksLimit: 7,
 
           color: y2color,
         },
@@ -196,7 +196,7 @@ export function createChartOptions(theme, dataLabel, timeRange, yAxis) {
           dash: [3, 3],
         },
         ticks: {
-          maxTicksLimit: 6,
+          maxTicksLimit: 7,
         },
       },
       y: yAxis,

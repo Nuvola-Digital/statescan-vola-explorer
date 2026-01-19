@@ -8,10 +8,10 @@ import ValueDisplay from "../../displayValue";
 import AccountIcon from "../../icons/accountIcon";
 import AssetSquareIcon from "../../icons/assetSquareIcon";
 import BlockSquareIcon from "../../icons/blockSquareIcon";
-import FinalizedBlockSquareIcon from "../../icons/finalizedBlockSquareIcon";
 import NftSquareIcon from "../../icons/nftSquareIcon";
 import ParaIdSquareIcon from "../../icons/paraIdSquareIcon";
 import TotalEventsIcon from "../../icons/totalEvents";
+import TransfersIcon from "../../icons/transfersIcon";
 import WalletIcon from "../../icons/WalletIcon";
 import Loading from "../../loadings/loading";
 import { StyledPanelTableWrapper } from "../../styled/panel";
@@ -46,9 +46,14 @@ function Overview() {
             value={currencify(overview.latestHeight)}
           />
           <OverviewItem
-            icon={<FinalizedBlockSquareIcon />}
-            label="Finalized Blocks"
-            value={currencify(overview.finalizedHeight)}
+            icon={<TransfersIcon />}
+            label="Total Transactions"
+            value={currencify(overview.signedExtrinsics)}
+          />
+          <OverviewItem
+            icon={<TotalEventsIcon />}
+            label="Total Events"
+            value={currencify(overview.totalEvents)}
           />
           <OverviewItem
             icon={<AccountIcon />}
@@ -69,11 +74,7 @@ function Overview() {
             label="Active Wallets"
             value={currencify(overview.accounts)}
           />
-          <OverviewItem
-            icon={<TotalEventsIcon />}
-            label="Total Events"
-            value={currencify(overview.totalEvents)}
-          />
+
           {modules?.assets && (
             <OverviewItem
               icon={<AssetSquareIcon />}
