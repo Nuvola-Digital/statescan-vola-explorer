@@ -14,12 +14,12 @@ export default function useTimeRangeParams(timeRange) {
         break;
       case CHART_TIME_RANGE.ONE_WEEK:
         // Start from 7 days ago
-        start = moment().subtract(7, "days").valueOf() - 60000;
+        start = moment().subtract(7, "days").startOf("day").valueOf();
         interval = 4 * 60 * 60 * 1000; // ~4 hours in milliseconds
         break;
       case CHART_TIME_RANGE.ONE_MONTH:
-        // Start from 30 days ago
-        start = moment().subtract(30, "days").valueOf() - 60000;
+        // Start from 30 days ago at 00:00
+        start = moment().subtract(30, "days").startOf("day").valueOf();
         interval = 1 * 24 * 60 * 60 * 1000; // 1 day in milliseconds
         break;
       default:
