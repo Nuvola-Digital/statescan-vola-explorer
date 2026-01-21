@@ -1,28 +1,22 @@
 import styled from "styled-components";
 import { withLoading } from "../../../HOC/withLoading";
-import { smcss } from "../../../styles/responsive";
 import {
   flex,
   flex_1,
+  gap_x,
   items_center,
   justify_between,
+  justify_center,
   m,
-  p,
-  p_x,
-  theme,
-  w_full,
   max_w_half,
-  gap_x,
-  hidden,
-  h,
-  p_b,
+  p,
+  w_full,
 } from "../../../styles/tailwindcss";
 import NoData from "../../noData";
 
 const List = styled.ul`
   ${m(0)};
   ${p(0)};
-  ${p_b(8)};
 `;
 
 const ListItemLeft = styled.div`
@@ -36,20 +30,31 @@ const ListItemRight = styled.div`
   ${max_w_half};
 `;
 const ListItemIcon = styled.div`
-  ${smcss(hidden)};
+  padding: 8px;
+  border-radius: 8px;
+  height: 40px;
+  width: 40px;
+  ${flex};
+  ${items_center};
+  ${justify_center};
+  background-color: ${(p) => p.theme.containerSecondary};
+  &:hover {
+    background-color: ${(p) => p.theme.containerSecondaryHover};
+  }
+  & svg {
+    display: block;
+    height: 24px;
+    width: 24px;
+  }
 `;
 
 const ListItem = styled.li`
-  ${p_x(24)};
+  ${p(16)};
   ${w_full};
   ${flex};
   ${items_center};
   ${justify_between};
-  ${h(72)};
   box-sizing: border-box;
-  &:not(:last-child) {
-    border-bottom: 1px solid ${theme("strokeBase")};
-  }
 `;
 
 function mapLoadingState(props) {

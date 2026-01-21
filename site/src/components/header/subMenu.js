@@ -12,7 +12,7 @@ const Wrapper = styled(HeaderMenuItem)`
 `;
 
 const TitleWrapper = styled.div`
-  color: ${(p) => p.theme.fontPrimary};
+  color: ${(p) => p.theme.fontSecondary};
   ${(p) =>
     p.isActive &&
     css`

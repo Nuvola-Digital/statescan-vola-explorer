@@ -6,7 +6,13 @@ const {
 } = require("@statescan/mongo");
 const { isAssetsChain, isUniquesChain, isPolimec } = require("../../env");
 const { getTransferColByChain } = require("../../common/transfer/col");
+const {
+  block: { getEventCollection },
+} = require("@statescan/mongo");
 
+const {
+  chain: { getApi },
+} = require("@osn/scan-common");
 const overview = {};
 
 async function updateHeightsAndIssuance() {
@@ -68,13 +74,23 @@ async function updateNftInstances() {
   });
   overview.nftInstances = { valid, total };
 }
+async function updateValidatorsAndEvents() {
+  const api = await getApi();
+  const validators = await api.query.palletStaking.counterForValidators();
+  overview.validators = validators.toNumber();
 
+  const col = await getEventCollection();
+  const total = await col.countDocuments();
+  overview.totalEvents = total;
+
+  // overview.circulatingSupply =
+}
 async function updateAll() {
   await updateHeightsAndIssuance();
   await updateSignedExtrinsics();
   await updateTransfers();
   await updateAccounts();
-
+  await updateValidatorsAndEvents();
   if (isAssetsChain() || isPolimec()) {
     await updateAssets();
   }
@@ -93,6 +109,37 @@ async function updateOverview() {
   }
 }
 
+async function getDetailedOverview() {
+  try {
+    const api = await getApi();
+    if (overview.totalIssuance) {
+      const accounts = [
+        "5DHkp437qFfVZgLveRtF2dqQNQ3dQGyog6t8CWm5VnR1KbSe",
+        "5HgycssXyZR9ZRz1E2BjPND16gt348NBUKpzo6J5pParKeDc",
+        "5FRTMVserRHhv979wbzq1guvQBqZc4LUbBK6NmeNBTyR8jiT",
+        "5GUL7FQGXTxkkmeVPmHSiffSY35R7ysjHRgru6fhNMJxqUb4",
+        "5EP5Dg5n6voMoGcd6S8MVm1gKNGRqwiojutLSxfaNwvC7x5M",
+        "5HiwEvaQdAx1t2VVSH24oderuYb3pavJrEcgpnyZBXDrgo2f",
+      ];
+      const results = await api.query.system.account.multi(accounts);
+      const totalBalance = results.reduce(
+        (sum, r) => sum + r.data.free.toBigInt(),
+        0n,
+      );
+
+      const circulatingSupply = BigInt(overview.totalIssuance) - totalBalance;
+      overview.circulatingSupply = circulatingSupply.toString();
+    }
+
+    const currentEpoch = await api.query.timeframe.epochNow();
+    const epochRevenue = await api.query.storageEarnings.totalRevenue();
+    overview.currentEpochRevenue = epochRevenue.toString();
+    overview.currentEpoch = currentEpoch.toString();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 function getOverview() {
   return overview;
 }
@@ -100,4 +147,5 @@ function getOverview() {
 module.exports = {
   updateOverview,
   getOverview,
+  getDetailedOverview
 };

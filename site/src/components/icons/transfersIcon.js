@@ -3,7 +3,8 @@ import { ReactComponent as Transfers } from "./transfers.svg";
 
 const TransfersIcon = styled(Transfers)`
   path {
-    stroke: ${(p) => p.theme.fontTertiary};
+    stroke: none;
+    fill: ${(p) => p.theme.fontPrimary};
   }
 `;
 

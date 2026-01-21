@@ -21,6 +21,7 @@
     "chart.js": "^4.1.2",
     "chartjs-adapter-moment": "^1.0.1",
     "copy-to-clipboard": "^3.3.2",
+    "framer-motion": "^12.26.2",
     "graphql": "^16.7.1",
     "is-ipfs": "^8.0.1",
     "is-utf8": "^0.2.1",
@@ -51,8 +52,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "dev": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
+    "start": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src"

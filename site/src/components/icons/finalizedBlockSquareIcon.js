@@ -3,7 +3,8 @@ import { ReactComponent } from "./finalized-block-square.svg";
 
 const FinalizedBlockSquareIcon = styled(ReactComponent)`
   path {
-    stroke: ${({ theme }) => theme.fontTertiary};
+    stroke: none;
+    fill: ${({ theme }) => theme.fontPrimary};
   }
 
   linearGradient {

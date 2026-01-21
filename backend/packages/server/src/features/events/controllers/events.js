@@ -1,8 +1,72 @@
 const { getTimeDimension } = require("../../../common/getTimeDimension");
-const { extractPage } = require("../../../utils");
+const {
+  extractPage,
+  extractDateRange,
+  getBoundariesByInterval,
+} = require("../../../utils");
 const {
   block: { getEventCollection },
 } = require("@statescan/mongo");
+
+async function getChart(ctx) {
+  const col = await getEventCollection();
+  const { start, end, interval } = extractDateRange(ctx);
+  const intervals = getBoundariesByInterval(start, end, interval);
+  const totalBeforeStart = await col.countDocuments({
+    "indexer.blockTime": { $lte: start },
+  });
+  const distribution = await col
+    .aggregate([
+      {
+        $match: {
+          "indexer.blockTime": {
+            $gt: start,
+            $lte: end,
+          },
+        },
+      },
+      {
+        $bucket: {
+          groupBy: "$indexer.blockTime",
+          boundaries: intervals,
+          default: null,
+          output: {
+            totalEvents: {
+              $sum: 1,
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          interval: "$_id",
+          _id: 0,
+          totalEvents: 1,
+        },
+      },
+    ])
+    .toArray();
+
+  const distributionMap = new Map(
+    distribution.map((x) => [x.interval, x.totalEvents]),
+  );
+  let totalEvents = totalBeforeStart;
+  const chart = [
+    { interval: start, totalEvents },
+    ...intervals
+      .filter((x) => x > start && x <= end)
+      .map((intervalEnd) => {
+        const intervalStart = intervalEnd - interval;
+        const totalEventsInInterval = distributionMap.get(intervalStart) || 0;
+        totalEvents += totalEventsInInterval;
+        return {
+          interval: intervalEnd,
+          totalEvents,
+        };
+      }),
+  ];
+  ctx.body = chart;
+}
 
 async function getEvents(ctx) {
   const { page, pageSize } = extractPage(ctx);
@@ -34,6 +98,7 @@ async function getEvents(ctx) {
   }
 
   const col = await getEventCollection();
+  const total = await col.countDocuments();
   const items = await col
     .find(q, { projection: { _id: 0 } })
     .sort({ "indexer.blockHeight": -1, "indexer.eventIndex": 1 })
@@ -45,9 +110,11 @@ async function getEvents(ctx) {
     items,
     page,
     pageSize,
+    total,
   };
 }
 
 module.exports = {
   getEvents,
+  getChart,
 };

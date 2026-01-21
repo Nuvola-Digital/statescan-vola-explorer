@@ -25,6 +25,12 @@ export const Inter_20_700 = css`
   font-size: 20px;
   line-height: 20px;
 `;
+export const Inter_20_500 = css`
+  ${Inter};
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+`;
 
 export const Inter_18_700 = css`
   ${Inter};
@@ -32,7 +38,12 @@ export const Inter_18_700 = css`
   font-size: 18px;
   line-height: 20px;
 `;
-
+export const Inter_18_500 = css`
+  ${Inter};
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+`;
 export const Inter_14_700 = css`
   ${Inter};
   font-weight: 700;

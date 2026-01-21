@@ -33,7 +33,6 @@ const InputWrapper = styled.div`
   &:focus {
     border-color: ${(p) => p.theme.theme500};
     outline: none;
-    box-shadow: 0 0 0 2px ${(p) => p.theme.theme100};
   }
 
   ${(p) =>
