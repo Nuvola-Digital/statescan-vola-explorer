@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { Inter_12_500, Inter_18_700 } from "../../../styles/text";
+import { gap_y, p } from "../../../styles/tailwindcss";
+import { Inter_12_500, Inter_20_500 } from "../../../styles/text";
+import CircledInfoIcon from "../../icons/circledInfoIcon";
 import ThemedLink from "../../styled/link";
 import TooltipOrigin from "../../tooltip";
-import CircledInfoIcon from "../../icons/circledInfoIcon";
-import { flex, hidden } from "../../../styles/tailwindcss";
-import { breakpoint } from "../../../styles/responsive";
 
 const Tooltip = styled(TooltipOrigin)`
   display: inline-flex;
@@ -12,22 +11,32 @@ const Tooltip = styled(TooltipOrigin)`
 `;
 
 const IconWrapper = styled.div`
-  ${flex};
-  margin-right: 16px;
-
-  ${breakpoint(640, hidden)};
+  padding: 8px;
+  border-radius: 8px;
+  width: fit-content;
+  height: fit-content;
+  background-color: ${(p) => p.theme.secondaryContainer};
+  &:hover {
+    background-color: ${(p) => p.theme.secondaryContainerHover};
+  }
+  & svg {
+    display: block;
+    height: 24px;
+    width: 24px;
+  }
 `;
 
 const ContentLabel = styled.div`
   color: ${(p) => p.theme.fontTertiary};
   margin: 0;
-  margin-bottom: 8px;
+  font-size: 16px;
   ${Inter_12_500};
   display: inline-flex;
 `;
 const ContentValue = styled.div`
   color: ${(p) => p.theme.fontPrimary};
-  ${Inter_18_700};
+  ${Inter_20_500};
+  font-size: 20px;
 `;
 const ContentValueTotal = styled.span`
   color: ${(p) => p.theme.fontTertiary};
@@ -47,7 +56,15 @@ const Link = styled(ThemedLink)`
 `;
 
 const Wrapper = styled.div`
-  ${flex};
+  ${p(16)};
+  ${gap_y(40)};
+  background: ${(p) => p.theme.fillPanel};
+  border: 1px solid ${(p) => p.theme.defaultOutline};
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-w-width: 136px;
 `;
 
 export default function OverviewItem({ icon, label, value, total, to, tip }) {
@@ -63,6 +80,13 @@ export default function OverviewItem({ icon, label, value, total, to, tip }) {
       <IconWrapper>{icon}</IconWrapper>
 
       <ContentWrapper>
+        <ContentValue>
+          {to ? (
+            <Link to={to}>{resolveContentValue}</Link>
+          ) : (
+            resolveContentValue
+          )}
+        </ContentValue>
         <ContentLabel>
           {label}
           {tip && (
@@ -71,13 +95,6 @@ export default function OverviewItem({ icon, label, value, total, to, tip }) {
             </Tooltip>
           )}
         </ContentLabel>
-        <ContentValue>
-          {to ? (
-            <Link to={to}>{resolveContentValue}</Link>
-          ) : (
-            resolveContentValue
-          )}
-        </ContentValue>
       </ContentWrapper>
     </Wrapper>
   );

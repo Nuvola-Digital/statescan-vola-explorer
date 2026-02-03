@@ -3,7 +3,8 @@ import { ReactComponent as AssetSquare } from "./asset-square.svg";
 
 const AssetSquareIcon = styled(AssetSquare)`
   path {
-    stroke: ${({ theme }) => theme.fontTertiary};
+    stroke: none;
+    fill: ${({ theme }) => theme.fontPrimary};
   }
 
   linearGradient {

@@ -8,8 +8,8 @@ export const HeaderMenuItem = styled.div`
   ${Inter_14_600};
   cursor: pointer;
   text-decoration: none;
-  padding: 8px 12px;
-
+  padding: 0px 12px;
+  color: ${(p) => p.theme.fontTertiary};
   &:hover {
     ${bg_theme("fillBase")};
     ${rounded_8};

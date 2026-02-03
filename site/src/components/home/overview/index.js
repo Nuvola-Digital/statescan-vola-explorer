@@ -1,23 +1,24 @@
 import { toPrecision } from "@osn/common";
 import { useSelector } from "react-redux";
 import { withLoading } from "../../../HOC/withLoading";
+import useOverview from "../../../hooks/overview/useOverview";
 import { chainSettingSelector } from "../../../store/reducers/settingSlice";
 import { currencify } from "../../../utils";
+import ValueDisplay from "../../displayValue";
+import AccountIcon from "../../icons/accountIcon";
 import AssetSquareIcon from "../../icons/assetSquareIcon";
 import BlockSquareIcon from "../../icons/blockSquareIcon";
-import ExtrinsicsSquareIcon from "../../icons/extrinsicsSquareIcon";
-import FinalizedBlockSquareIcon from "../../icons/finalizedBlockSquareIcon";
-import HolderSquareIcon from "../../icons/holderSquareIcon";
-import TransferSquareIcon from "../../icons/transferSquareIcon";
-import Loading from "../../loadings/loading";
-import { StyledPanelTableWrapper } from "../../styled/panel";
-import OverviewItem from "./item";
-import ValueDisplay from "../../displayValue";
-import Tooltip from "../../tooltip";
 import NftSquareIcon from "../../icons/nftSquareIcon";
 import ParaIdSquareIcon from "../../icons/paraIdSquareIcon";
+import TotalEventsIcon from "../../icons/totalEvents";
+import TransfersIcon from "../../icons/transfersIcon";
+import WalletIcon from "../../icons/WalletIcon";
+import Loading from "../../loadings/loading";
+import { StyledPanelTableWrapper } from "../../styled/panel";
+import Tooltip from "../../tooltip";
+import { Title } from "../sections/styled";
+import OverviewItem from "./item";
 import { OverviewItemsWrapper, OverviewPanel } from "./styled";
-import useOverview from "../../../hooks/overview/useOverview";
 
 const mapLoadingState = (_props) => {
   return {
@@ -34,45 +35,30 @@ function Overview() {
   function issuancePrecision(issuance) {
     return toPrecision(issuance ?? 0, chainSetting.decimals);
   }
-
   return (
     <StyledPanelTableWrapper>
+      <Title>Block Overview</Title>
       <OverviewPanel>
         <OverviewItemsWrapper>
           <OverviewItem
             icon={<BlockSquareIcon />}
-            label="Latest Blocks"
+            label="Latest Block"
             value={currencify(overview.latestHeight)}
           />
           <OverviewItem
-            icon={<FinalizedBlockSquareIcon />}
-            label="Finalized Block"
-            value={currencify(overview.finalizedHeight)}
-          />
-          <OverviewItem
-            icon={<ExtrinsicsSquareIcon />}
-            label="Signed Extrinsics"
+            icon={<TransfersIcon />}
+            label="Total Transactions"
             value={currencify(overview.signedExtrinsics)}
           />
           <OverviewItem
-            icon={<TransferSquareIcon />}
-            label="Transfers"
-            value={currencify(overview.transfers)}
+            icon={<TotalEventsIcon />}
+            label="Total Events"
+            value={currencify(overview.totalEvents)}
           />
           <OverviewItem
-            icon={<AssetSquareIcon />}
-            label={`Total Issuance (${chainSetting.symbol})`}
-            value={
-              <Tooltip
-                tip={currencify(
-                  Number(issuancePrecision(overview.totalIssuance)),
-                )}
-              >
-                <ValueDisplay
-                  value={issuancePrecision(overview.totalIssuance)}
-                />
-              </Tooltip>
-            }
+            icon={<AccountIcon />}
+            label="Validators"
+            value={currencify(overview.validators)}
           />
 
           {chainSetting.para && (
@@ -84,8 +70,8 @@ function Overview() {
           )}
 
           <OverviewItem
-            icon={<HolderSquareIcon />}
-            label="Accounts"
+            icon={<WalletIcon />}
+            label="Active Wallets"
             value={currencify(overview.accounts)}
           />
 
@@ -115,6 +101,21 @@ function Overview() {
               />
             </>
           )}
+          <OverviewItem
+            icon={<AssetSquareIcon />}
+            label={`Circulating Supply (${chainSetting.symbol})`}
+            value={
+              <Tooltip
+                tip={currencify(
+                  Number(issuancePrecision(overview.circulatingSupply)),
+                )}
+              >
+                <ValueDisplay
+                  value={issuancePrecision(overview.circulatingSupply)}
+                />
+              </Tooltip>
+            }
+          />
         </OverviewItemsWrapper>
       </OverviewPanel>
     </StyledPanelTableWrapper>
